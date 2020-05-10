@@ -13,3 +13,10 @@ class BoardRow:
         """
         self.boardRow = [Field() for i in range(length)]
         self.length = length
+
+    def printBoardRow(self):
+        for i in range(self.length):
+            line = ""
+            for field in self.boardRow:
+                line += field.printFieldRow(i)
+            print(line)

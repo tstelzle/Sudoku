@@ -13,3 +13,7 @@ class Board:
         """
         self.board = [BoardRow() for i in range(length)]
         self.length = length
+
+    def printBoard(self):
+        for boardRow in self.board:
+            boardRow.printBoardRow()

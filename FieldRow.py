@@ -9,5 +9,6 @@ class FieldRow:
         """
         The constructor of the @class Field.
         """
-        self.fieldRow = [length]
+        self.fieldRow = [None] * length
         self.length = length
+        #print("Länge: " + str(len(self.fieldRow)))

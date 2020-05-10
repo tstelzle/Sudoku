@@ -28,3 +28,13 @@ class Field:
             return self.field[fieldListPos][fieldRowListPos]
         else:
             return None
+
+    def printFieldRow(self, posFieldRow):
+        fieldRow = self.field[posFieldRow].fieldRow
+        output = ""
+        for val in fieldRow:
+            if val == None:
+                output = output + '_ '
+            else:
+                output = output + str(val) + ' '
+        return output
