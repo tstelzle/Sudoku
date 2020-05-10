@@ -1,4 +1,5 @@
 from Board.BoardRow import BoardRow
+import math
 
 class Board:
     """
