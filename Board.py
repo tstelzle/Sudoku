@@ -15,5 +15,11 @@ class Board:
         self.length = length
 
     def printBoard(self):
+        """
+        Calls the printBaordRow for every boardRow in the Sudoku.
+        Prints the board.
+        :return: None
+        """
         for boardRow in self.board:
             boardRow.printBoardRow()
+            print("")

@@ -15,8 +15,12 @@ class BoardRow:
         self.length = length
 
     def printBoardRow(self):
+        """
+        Prints all the lines in the Sudoku from the given boardRow
+        :return: None
+        """
         for i in range(self.length):
-            line = ""
+            line = "|"
             for field in self.boardRow:
                 line += field.printFieldRow(i)
             print(line)

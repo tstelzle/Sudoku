@@ -7,6 +7,8 @@ def main():
     print('Length of the Field: ' + str(sudoku.board[0].boardRow[0].length))
     print('Length of the FieldRow: ' +  str(sudoku.board[0].boardRow[0].field[0].length))
 
+    print("")
+    print('The given Sudoku board:')
     sudoku.printBoard()
 
 if __name__ == "__main__":

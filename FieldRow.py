@@ -11,4 +11,3 @@ class FieldRow:
         """
         self.fieldRow = [None] * length
         self.length = length
-        #print("Länge: " + str(len(self.fieldRow)))

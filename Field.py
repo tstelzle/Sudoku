@@ -17,7 +17,7 @@ class Field:
 
     def getValue(self, pos):
         """
-        Returns Nonen or the value which is written in field.
+        Returns None or the value which is written in field.
 
         :param pos: The position in the board counted from top left to bottom right.
         :return: The value in the field or None
@@ -30,11 +30,17 @@ class Field:
             return None
 
     def printFieldRow(self, posFieldRow):
+        """
+        Prints the row in the field given by posFieldRow
+        :param posFieldRow:
+        :return: String with the values in the fieldRow
+        """
         fieldRow = self.field[posFieldRow].fieldRow
-        output = ""
+        output = " "
         for val in fieldRow:
             if val == None:
                 output = output + '_ '
             else:
                 output = output + str(val) + ' '
+        output += "|"
         return output
