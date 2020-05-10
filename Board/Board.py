@@ -1,4 +1,5 @@
 from Board.BoardRow import BoardRow
+import math
 
 class Board:
     """
@@ -23,11 +24,25 @@ class Board:
         for boardRow in self.board:
             boardRow.printBoardRow()
             print("")
-    def setValue(self, x: int, y: int):
+
+    def setValue(self, x: int, y: int, value: int):
         """
 
-        :param x:
-        :param y:
-        :return:
+        :param x: The x Coordinate of the Board
+        :param y: The y Coordinate of the Board
+        :return: None
         """
+
+        self.board[math.floor(y / self.length)].boardRow[math.floor(x / self.length)].field[y % self.length].fieldRow[
+            x % self.length] = value
+
+    def getValue(self, x: int, y: int):
+        """
+
+        :param x: The x Coordinate of the Board
+        :param y: The y Coordinate of the Board
+        :return: The value of the specified Coordinate
+        """
+        return self.board[math.floor(y / self.length)].boardRow[math.floor(x / self.length)].field[
+            y % self.length].fieldRow[x % self.length]
 
