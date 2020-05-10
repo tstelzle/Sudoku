@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from Board.Board import Board
 
-class ProblemFinder:
+class ProblemFinder(ABC):
 
     @abstractmethod
     def __init__(self, board: Board):

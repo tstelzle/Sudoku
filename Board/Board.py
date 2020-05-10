@@ -23,3 +23,11 @@ class Board:
         for boardRow in self.board:
             boardRow.printBoardRow()
             print("")
+    def setValue(self, x: int, y: int):
+        """
+
+        :param x:
+        :param y:
+        :return:
+        """
+
