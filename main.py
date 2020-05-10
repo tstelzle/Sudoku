@@ -1,4 +1,4 @@
-from Board import Board
+from Board.Board import Board
 
 def main():
     sudoku = Board(4)

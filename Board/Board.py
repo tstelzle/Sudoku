@@ -1,4 +1,4 @@
-from BoardRow import BoardRow
+from Board.BoardRow import BoardRow
 
 class Board:
     """

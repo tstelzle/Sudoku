@@ -1,4 +1,4 @@
-from Field import Field
+from Board.Field import Field
 
 class BoardRow:
     """
