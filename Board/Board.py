@@ -23,3 +23,9 @@ class Board:
         for boardRow in self.board:
             boardRow.printBoardRow()
             print("")
+
+    def setValue2(self, xBoard, yBoard, xField, yField, value):
+         self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField] = value
+
+    def getValue2(self, xBoard, yBoard, xField, yField):
+        return self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField]
