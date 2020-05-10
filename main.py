@@ -2,9 +2,9 @@ from Board.Board import Board
 from ProblemGenerator.RandomProblem import RandomProblem
 
 def main():
-    sudoku = Board(4)
+    sudoku = Board()
     randProb = RandomProblem(sudoku)
-    randProb.returnProblem(1)
+    randProb.returnProblem(1, 10)
 
     print('Length of the Board: ' + str(sudoku.length))
     print('Length of the BoardRow: '  + str(sudoku.board[0].length))
