@@ -12,7 +12,7 @@ class Field:
 
         :param length: The length of the board. Default=3
         """
-        self.field = [FieldRow() for i in range(length)]
+        self.field = [FieldRow(length) for i in range(length)]
         self.length = length
 
     def getValue(self, pos):

@@ -11,7 +11,7 @@ class BoardRow:
         The constructor of the @class BoardRow.
         :param length: the lenght of the BoardRow list.
         """
-        self.boardRow = [Field() for i in range(length)]
+        self.boardRow = [Field(length) for i in range(length)]
         self.length = length
 
     def printBoardRow(self):
