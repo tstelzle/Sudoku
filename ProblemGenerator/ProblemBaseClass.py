@@ -9,8 +9,16 @@ class ProblemFinder(ABC):
 
     @abstractmethod
     def returnProblem(self):
+        """
+        Returns the board with the starting numbers for the sudoku.
+        :return: Board
+        """
         pass
 
     @abstractmethod
     def returnProblemSolution(self):
+        """
+        Returns the solution the problem given in returnProblem.
+        :return: Board
+        """
         pass
