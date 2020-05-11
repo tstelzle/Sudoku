@@ -52,3 +52,12 @@ class Board:
         return self.board[math.floor(y / self.length)].boardRow[math.floor(x / self.length)].field[
             y % self.length].fieldRow[x % self.length]
 
+    def clear_board(self):
+        """
+        sets all entries back to None
+        :return: None
+        """
+
+        self.board = [BoardRow(self.length) for i in range(self.length)]
+
+
