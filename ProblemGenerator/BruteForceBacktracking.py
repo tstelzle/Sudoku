@@ -53,14 +53,30 @@ class BruteForceBacktracking(ProblemFinder):
             self.board.setValue(x, y, -1)
 
     def initializeSetValues(self):
+        """
+        Initializes the setValues dictionary, which stores which values can be used in the sudoku at this position.
+        :return: None
+        """
         for x in range(0, self.board.getBoardLength()):
             for y in range(0, self.board.getBoardLength()):
                 self.setValues[self.getIdentifier(x, y)] = list(range(1, self.board.getBoardLength() + 1))
 
     def getIdentifier(self, x: int, y: int):
+        """
+        Returns the string which identifies the fields in the sudoku for the setValues dictionary.
+        :param x: x-axis of the sudoku field
+        :param y: y-axis of the sudoku field
+        :return: identifier string
+        """
         return str(x) + str(y)
 
     def resetFollowingSetValues(self, x: int, y: int):
+        """
+        Reset the values in the setValues dictionary after the given x,y position.
+        :param x: x-axis of the sudoku field
+        :param y: y-axis of the sudoku field
+        :return: None
+        """
         for x_1 in range(x + 1, self.board.getBoardLength()):
             self.setValues[self.getIdentifier(x_1, y)] = list(range(1, self.board.getBoardLength() + 1))
         for y_1 in range(y + 1, self.board.getBoardLength()):
