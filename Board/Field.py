@@ -1,5 +1,6 @@
 from Board.FieldRow import FieldRow
 
+
 class Field:
     """
     The class for structuring one piece of the complete Sudoku board.
@@ -24,7 +25,7 @@ class Field:
         """
         fieldListPos = pos % self.length
         fieldRowListPos = pos - self.length * fieldListPos
-        if(self.field[fieldListPos][fieldRowListPos]):
+        if (self.field[fieldListPos][fieldRowListPos]):
             return self.field[fieldListPos][fieldRowListPos]
         else:
             return None
@@ -38,7 +39,7 @@ class Field:
         fieldRow = self.field[posFieldRow].fieldRow
         output = " "
         for val in fieldRow:
-            if val == None:
+            if val == None or val == -1:
                 output = output + '_ '
             else:
                 output = output + str(val) + ' '

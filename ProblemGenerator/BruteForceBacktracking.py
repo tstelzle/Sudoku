@@ -1,5 +1,6 @@
 from ProblemGenerator.ProblemBaseClass import ProblemFinder
 import Board.Board
+import random
 import math
 
 
@@ -11,35 +12,22 @@ class BruteForceBacktracking(ProblemFinder):
         self.setValues = {}
         self.initializeSetValues()
 
-    def initializeSetValues(self):
-        for x in range(0, self.board.getBoardLength()):
-            for y in range(0, self.board.getBoardLength()):
-                self.setValues[self.getIdentifier(x, y)] = list(range(1, self.board.getBoardLength() + 1))
-
-    def getIdentifier(self, x: int, y: int):
-        return str(x) + str(y)
-
-    # ToDo Backtracking two step should reset the setValue of the list
     def returnProblemSolution(self):
         y = 0
         x = 0
-        print(self.board.getBoardLength())
         while y < self.board.getBoardLength():
-            print(y)
             while x < self.board.getBoardLength():
-                if (y == self.board.getBoardLength()):
-                    break
-                print(x)
+                if (y == self.board.getBoardLength() and x == 0):
+                    return
                 tried = []
-                try:
-                    array = self.setValues[self.getIdentifier(x, y)]
-                except:
-                    print('hier')
+                array = self.setValues[self.getIdentifier(x, y)]
                 for val in array:
                     row = self.checkRow(y, val)
                     column = self.checkColumn(x, val)
                     box = self.checkBox(x, y, val)
+                    tried.append(val)
                     if (row and column and box):
+                        self.resetFollowingSetValues(x, y)
                         self.board.setValue(x, y, val)
                         self.setValues[self.getIdentifier(x, y)].remove(val)
                         if x == self.board.getBoardLength() - 1:
@@ -48,64 +36,33 @@ class BruteForceBacktracking(ProblemFinder):
                         else:
                             x += 1
                         break
-                    # ToDo not working if statemnet -> never insert
-                    tried.append(val)
-                    if len(tried) >= len(self.setValues[self.getIdentifier(x, y)]):
-                        print('jo')
-                        if x == self.board.getBoardLength()-1:
-                            if (self.board.getValue(0, y + 1) == -1):
-                                self.setValues[self.getIdentifier(x + 1, y)] = list(
-                                    range(1, self.board.getBoardLength() + 1))
-                        else:
-                            if (self.board.getValue(x + 1, y) == -1):
-                                self.setValues[self.getIdentifier(x + 1, y)] = list(
-                                    range(1, self.board.getBoardLength() + 1))
-                        # oldVal = self.board.getValue(x, y)
-                        # self.setValues[self.getIdentifier(x, y)].append(oldVal)
+                    elif len(tried) >= len(self.setValues[self.getIdentifier(x, y)]):
                         self.board.setValue(x, y, -1)
                         if x == 0:
-                            y = y - 1
+                            y -= 1
                             x = self.board.getBoardLength() - 1
                         else:
-                            x = x - 1
+                            x -= 1
                         break
 
     def returnProblem(self):
-        print("ToDo")
+        self.returnProblemSolution()
+        for val in range(0, math.floor(self.board.getMaxNumberOfEntries() / 2)):
+            x = random.randint(0, self.board.getBoardLength() - 1)
+            y = random.randint(0, self.board.getBoardLength() - 1)
+            self.board.setValue(x, y, -1)
 
-    def getMultiplier(self, val: int):
-        if val == 0:
-            return 0
-        return math.floor(val / self.board.length)
-
-    def getBoxEdgeMin(self, val: int):
-        return self.getMultiplier(val) * self.board.length
-
-    def getBoxEdgeMax(self, val: int):
-        return ((self.getMultiplier(val) + 1) * self.board.length)
-
-    def checkBox(self, x: int, y: int, val: int):
-        minX = self.getBoxEdgeMin(x)
-        maxX = self.getBoxEdgeMax(x)
-        minY = self.getBoxEdgeMin(y)
-        maxY = self.getBoxEdgeMax(y)
-        for x_1 in range(minX, maxX):
-            for y_1 in range(minY, maxY):
-                value = self.board.getValue(x_1, y_1)
-                if value == val:
-                    return False
-        return True
-
-    def checkColumn(self, x: int, val: int):
-        for y in range(0, self.board.getBoardLength()):
-            value = self.board.getValue(x, y)
-            if value == val:
-                return False
-        return True
-
-    def checkRow(self, y: int, val: int):
+    def initializeSetValues(self):
         for x in range(0, self.board.getBoardLength()):
-            value = self.board.getValue(x, y)
-            if value == val:
-                return False
-        return True
+            for y in range(0, self.board.getBoardLength()):
+                self.setValues[self.getIdentifier(x, y)] = list(range(1, self.board.getBoardLength() + 1))
+
+    def getIdentifier(self, x: int, y: int):
+        return str(x) + str(y)
+
+    def resetFollowingSetValues(self, x: int, y: int):
+        for x_1 in range(x + 1, self.board.getBoardLength()):
+            self.setValues[self.getIdentifier(x_1, y)] = list(range(1, self.board.getBoardLength() + 1))
+        for y_1 in range(y + 1, self.board.getBoardLength()):
+            for x_1 in range(0, self.board.getBoardLength()):
+                self.setValues[self.getIdentifier(x_1, y_1)] = list(range(1, self.board.getBoardLength() + 1))
