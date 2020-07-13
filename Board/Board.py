@@ -30,14 +30,14 @@ class Board:
         Returns the length of one site of the board.
         :return: int
         """
-        return self.board.length ** 2
+        return self.length ** 2
 
     def getMaxNumberOfEntries(self):
         """
         Returns the amount of entries, which can be put on the board
         :return: int
         """
-        return self.board.length ** 4
+        return self.length ** 4
 
     def setValue2(self, xBoard, yBoard, xField, yField, value):
          self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField] = value
