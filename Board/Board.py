@@ -1,5 +1,7 @@
-from Board.BoardRow import BoardRow
 import math
+
+from Board.BoardRow import BoardRow
+
 
 class Board:
     """
@@ -21,9 +23,22 @@ class Board:
         Prints the board.
         :return: None
         """
-        for boardRow in self.board:
-            boardRow.printBoardRow()
-            print("")
+        dashesNumbers = 3 * self.getBoardLength()
+        dashesPosts = 2 * self.length
+        print('-' * (dashesNumbers + dashesPosts + 1))
+        for i in range(len(self.board)):
+            self.board[i].printBoardRow()
+            print('-' * (dashesNumbers + dashesPosts + 1))
+
+    def boardToString(self):
+        boardString = ""
+        dashesNumbers = 3 * self.getBoardLength()
+        dashesPosts = 2 * self.length
+        boardString += '-' * (dashesNumbers + dashesPosts + 1) + '\n'
+        for i in range(len(self.board)):
+            boardString += self.board[i].boardRowToString()
+            boardString += '-' * (dashesNumbers + dashesPosts + 1) + '\n'
+        return boardString
 
     def getBoardLength(self):
         """
@@ -40,11 +55,11 @@ class Board:
         return self.length ** 4
 
     def setValue2(self, xBoard, yBoard, xField, yField, value):
-         self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField] = value
+        self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField] = value
 
     def getValue2(self, xBoard, yBoard, xField, yField):
         return self.board[yBoard].boardRow[xBoard].field[yField].fieldRow[xField]
-    
+
     def setValue(self, x: int, y: int, value: int):
         """
 
@@ -65,4 +80,3 @@ class Board:
         """
         return self.board[math.floor(y / self.length)].boardRow[math.floor(x / self.length)].field[
             y % self.length].fieldRow[x % self.length]
-

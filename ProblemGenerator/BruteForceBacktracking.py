@@ -1,7 +1,9 @@
-from ProblemGenerator.ProblemBaseClass import ProblemFinder
-import Board.Board
-import random
 import math
+import random
+
+import Board.Board
+import ProblemGenerator.difficulties as difficulties
+from ProblemGenerator.ProblemBaseClass import ProblemFinder
 
 
 class BruteForceBacktracking(ProblemFinder):
@@ -45,9 +47,10 @@ class BruteForceBacktracking(ProblemFinder):
                             x -= 1
                         break
 
-    def returnProblem(self):
-        self.returnProblemSolution()
-        for val in range(0, math.floor(self.board.getMaxNumberOfEntries() / 2)):
+    def returnProblem(self, difficulty: difficulties):
+        if self.board.getValue(0, 0) == None:
+            self.returnProblemSolution()
+        for val in range(0, math.floor(self.board.getMaxNumberOfEntries() * difficulty)):
             x = random.randint(0, self.board.getBoardLength() - 1)
             y = random.randint(0, self.board.getBoardLength() - 1)
             self.board.setValue(x, y, -1)

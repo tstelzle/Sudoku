@@ -1,5 +1,6 @@
 from Board.Field import Field
 
+
 class BoardRow:
     """
     One row in the complete Sudoku Board.
@@ -24,3 +25,12 @@ class BoardRow:
             for field in self.boardRow:
                 line += field.printFieldRow(i)
             print(line)
+
+    def boardRowToString(self):
+        boardRowString = ""
+        for i in range(self.length):
+            line = "|"
+            for field in self.boardRow:
+                line += field.printFieldRow(i)
+            boardRowString += line + '\n'
+        return boardRowString
