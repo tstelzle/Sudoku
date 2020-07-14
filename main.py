@@ -1,4 +1,4 @@
-import PdfService
+from output import PdfService
 import ProblemGenerator.difficulties as difficulties
 from Board.Board import Board
 from ProblemGenerator.BruteForceBacktracking import BruteForceBacktracking
@@ -20,16 +20,17 @@ def main():
     algorithmus.returnProblemSolution()
     sudoku.printBoard()
 
-    pdfPrinter.printToPdf(sudoku.boardToString())
+    pdfPrinter.printSudoku()
+    #pdfPrinter.printToPdf(sudoku.boardToString())
 
     print('The Sudoku Problem:')
     algorithmus.returnProblem(difficulties.HARD)
     sudoku.printBoard()
 
-    pdfPrinter.addPage()
-    pdfPrinter.printToPdf(sudoku.boardToString())
+    #pdfPrinter.addPage()
+    #pdfPrinter.printToPdf(sudoku.boardToString())
 
-    pdfPrinter.generatePdf('bruteForce_Hard')
+    #pdfPrinter.generatePdf('bruteForce_Hard')
 
 
 if __name__ == "__main__":
