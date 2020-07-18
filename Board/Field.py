@@ -40,7 +40,9 @@ class Field:
         output = " "
         for val in fieldRow:
             if val == None or val == -1:
-                output = output + '_ '
+                output = output + '__ '
+            elif val < 10:
+                output = output + ' ' + str(val) + ' '
             else:
                 output = output + str(val) + ' '
         output += "|"

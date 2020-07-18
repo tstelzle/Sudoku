@@ -1,0 +1,3 @@
+EASY = 0.25
+MEDIUM = 0.5
+HARD = 0.75

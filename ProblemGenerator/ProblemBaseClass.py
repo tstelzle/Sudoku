@@ -1,6 +1,8 @@
-from abc import ABC, abstractmethod
-from Board.Board import Board
 import math
+from abc import ABC, abstractmethod
+
+import ProblemGenerator.difficulties as difficulties
+from Board.Board import Board
 
 
 class ProblemFinder(ABC):
@@ -10,7 +12,7 @@ class ProblemFinder(ABC):
         self.board = board
 
     @abstractmethod
-    def returnProblem(self):
+    def returnProblem(self, difficulty: difficulties):
         """
         Returns the board with the starting numbers for the sudoku.
         :return: Board

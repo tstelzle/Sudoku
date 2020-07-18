@@ -1,9 +1,9 @@
-from ProblemGenerator.ProblemBaseClass import ProblemFinder
-
 # seed the pseudorandom number generator
 from random import seed
-from random import random
+
 from Board.Board import Board
+from ProblemGenerator.ProblemBaseClass import ProblemFinder
+
 
 class RandomProblem(ProblemFinder):
     super
@@ -21,11 +21,10 @@ class RandomProblem(ProblemFinder):
         seed(s)
         # generate some random numbers
         # print(random(), random(), random())
-        #self.board.setValue(0, 0, 1)
-        #self.board.setValue(1, 0, 1)
-        #self.board.setValue(4, 0, 1)
-        #self.board.setValue(4, 4, 1)
-
+        # self.board.setValue(0, 0, 1)
+        # self.board.setValue(1, 0, 1)
+        # self.board.setValue(4, 0, 1)
+        # self.board.setValue(4, 4, 1)
 
     def returnProblemSolution(self):
         """
