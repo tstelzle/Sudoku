@@ -1,3 +1,5 @@
 .idea/
 /**/*.pdf
 __pycache__/
+generated/*
+output/*

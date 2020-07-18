@@ -20,18 +20,12 @@ def main():
     algorithmus.returnProblemSolution()
     sudoku.printBoard()
 
-    pdfPrinter.printSudoku()
-    #pdfPrinter.printToPdf(sudoku.boardToString())
+    pdfPrinter.printSudoku('Sudoku-Solution')
 
     print('The Sudoku Problem:')
     algorithmus.returnProblem(difficulties.HARD)
     sudoku.printBoard()
-
-    #pdfPrinter.addPage()
-    #pdfPrinter.printToPdf(sudoku.boardToString())
-
-    #pdfPrinter.generatePdf('bruteForce_Hard')
-
+    pdfPrinter.printSudoku('Sudoku-Problem')
 
 if __name__ == "__main__":
     main()

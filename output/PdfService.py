@@ -1,5 +1,6 @@
-import pdfkit
 import bs4
+import pdfkit
+
 from Board.Board import Board
 
 
@@ -8,52 +9,61 @@ class PdfPrinter():
     def __init__(self, board: Board):
         self.board = board
 
-    # def printToPdf(self, value: str):
-    #     self.pdf.write(8.7, value)
-    #
-    # def addPage(self):
-    #     self.pdf.add_page('Landscape')
-    #
-    # def getPdf(self):
-    #     return self.pdf
-    #
-    # def generatePdf(self, pdfName: str):
-    #     self.pdf.output(pdfName + '.pdf')
-    #
-    # def printPdf(self, pdfName: str):
-    #     pdf = fpdf.FPDF(format='letter')
-    #     pdf.add_page()
-    #     pdf.set_font('Arial', size=12)
-    #     pdf.write(5, self.board.boardToString())
-    #     pdf.output(pdfName + ".pdf")
-
-    def printHtml(self):
-        with open('template.html') as template:
+    def printHtml(self, title: str):
+        with open('output/template.html') as template:
             html = template.read()
-            soup = bs4.BeautifulSoup(html)
+            soup = bs4.BeautifulSoup(html, 'html.parser')
+
+        headline = soup.new_tag('h1')
+        headline.append(title)
+        soup.body.append(headline)
 
         new_table = soup.new_tag('table')
-        soup.body.append(new_table)
 
-        with open('template.html', 'w') as output:
-            output.write(str(soup))
-
-
-        html = "<html><head><h1 style=\"text-align:center\">" + "Sudoku" + "</h1></head><body><table style=\"width:100%; text-align:center; border:1px solid black\">"
+        rowCounter = 1
+        lastRow = 1
         for boardRow in self.board.board:
             for field in boardRow.boardRow:
-                html += "<tr>"
-                for i in range(0,self.board.length):
-                        for val in field.field[i].fieldRow:
-                            html += "<td>" + str(val) + "</td>"
-                html += "</tr>"
-        html += "</table></body></html>"
-        Html_file = open("test.html", "w")
-        Html_file.write(html)
-        Html_file.close()
-        return html
+                if rowCounter % self.board.length == 0 and lastRow * self.board.length != self.board.getBoardLength():
+                    rowCounter = 1
+                    lastRow += 1
+                    column = soup.new_tag('tr', style="border-bottom: 5px solid black")
+                else:
+                    rowCounter += 1
+                    column = soup.new_tag('tr')
+                for i in range(0, self.board.length):
+                    columnCounter = 1
+                    for val in field.field[i].fieldRow:
+                        if columnCounter % self.board.length == 0 and (
+                                i + 1) * self.board.length != self.board.getBoardLength():
+                            columnCounter = 1
+                            elem = soup.new_tag('td', style="border-right: 5px solid black")
+                        else:
+                            columnCounter += 1
+                            elem = soup.new_tag('td')
+                        elemDiv = soup.new_tag('div',
+                                               style="text-align: center; line-height: 30px; height: 30px; width: 20px")
+                        if val != -1:
+                            elemDiv.insert(1, str(val))
+                        elem.append(elemDiv)
+                        column.append(elem)
+                    new_table.append(column)
 
-    def printSudoku(self):
-        html = self.printHtml()
-        print(html)
-        pdfkit.from_file('test.html', 'test.pdf', css='gutenberg.css')
+        soup.body.append(new_table)
+
+        fileName = 'generated/' + title + ".html"
+
+        with open(fileName, 'w') as output:
+            output.write(soup.prettify())
+
+        return fileName
+
+    def printSudoku(self, title: str):
+        fileName = self.printHtml(title)
+        output = 'generated/' + title + '.pdf'
+        options = {
+            'orientation': 'Landscape',
+            'title': title,
+            'page-size': 'A4'
+        }
+        pdfkit.from_file(fileName, output, css='output/gutenberg.css', options=options)

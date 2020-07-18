@@ -395,20 +395,22 @@ a, a:visited {
   word-wrap: break-word; }
 
 table {
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  border: 5px solid black; }
 
 thead {
   display: table-header-group; }
 
-table,
 th,
 td {
-  border-bottom: 1px solid #000; }
+  border: 1px solid #000; }
 
 td,
 th {
   padding: 8px 16px;
-  page-break-inside: avoid; }
+  page-break-inside: avoid;
+  width: 20px;
+  height: 20px;  }
 
 code,
 pre,
