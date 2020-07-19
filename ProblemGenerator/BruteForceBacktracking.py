@@ -62,7 +62,7 @@ class BruteForceBacktracking(ProblemFinder):
         """
         for x in range(0, self.board.getBoardLength()):
             for y in range(0, self.board.getBoardLength()):
-                self.setValues[self.getIdentifier(x, y)] = list(range(1, self.board.getBoardLength() + 1))
+                self.setValues[self.getIdentifier(x, y)] = self.randomList(self.board.getBoardLength() + 1)
 
     def getIdentifier(self, x: int, y: int):
         """
@@ -81,7 +81,11 @@ class BruteForceBacktracking(ProblemFinder):
         :return: None
         """
         for x_1 in range(x + 1, self.board.getBoardLength()):
-            self.setValues[self.getIdentifier(x_1, y)] = list(range(1, self.board.getBoardLength() + 1))
+            self.setValues[self.getIdentifier(x_1, y)] = self.randomList(self.board.getBoardLength() + 1)
         for y_1 in range(y + 1, self.board.getBoardLength()):
             for x_1 in range(0, self.board.getBoardLength()):
-                self.setValues[self.getIdentifier(x_1, y_1)] = list(range(1, self.board.getBoardLength() + 1))
+                self.setValues[self.getIdentifier(x_1, y_1)] = self.randomList(self.board.getBoardLength() + 1)
+
+    def randomList(self, length: int):
+        sortedList = list(range(1, length))
+        return random.sample(sortedList, len(sortedList))
