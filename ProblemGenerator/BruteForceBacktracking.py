@@ -87,5 +87,11 @@ class BruteForceBacktracking(ProblemFinder):
                 self.setValues[self.getIdentifier(x_1, y_1)] = self.randomList(self.board.getBoardLength() + 1)
 
     def randomList(self, length: int):
+        """
+        Builds and returns a randomized array of values from one to the given length.
+
+        :param length: the range for the array
+        :return: randomized array of values within the given length
+        """
         sortedList = list(range(1, length))
         return random.sample(sortedList, len(sortedList))

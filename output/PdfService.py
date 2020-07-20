@@ -10,6 +10,12 @@ class PdfPrinter():
         self.board = board
 
     def printHtml(self, title: str):
+        """
+        Gnerates a html template for the given board with the given title.
+
+        :param title: Title of the pdf
+        :return: filename of the gnerated tempalte
+        """
         with open('output/template.html') as template:
             html = template.read()
             soup = bs4.BeautifulSoup(html, 'html.parser')
@@ -59,6 +65,11 @@ class PdfPrinter():
         return fileName
 
     def printSudoku(self, title: str):
+        """
+        Builds the pdf with from the given template.
+
+        :param title: title of the pdf
+        """
         fileName = self.printHtml(title)
         output = 'generated/' + title + '.pdf'
         options = {
