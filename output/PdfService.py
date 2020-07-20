@@ -14,11 +14,11 @@ class PdfPrinter():
             html = template.read()
             soup = bs4.BeautifulSoup(html, 'html.parser')
 
-        headline = soup.new_tag('h1')
+        headline = soup.new_tag('h1', style="text-align:center")
         headline.append(title)
         soup.body.append(headline)
 
-        new_table = soup.new_tag('table')
+        new_table = soup.new_tag('table', style="margin-left: auto; margin-right: auto")
 
         rowCounter = 1
         lastRow = 1
