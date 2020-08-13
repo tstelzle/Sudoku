@@ -71,7 +71,7 @@ class BruteForceBacktracking(ProblemFinder):
         :param y: y-axis of the sudoku field
         :return: identifier string
         """
-        return str(x) + str(y)
+        return str(x) + "_" + str(y)
 
     def resetFollowingSetValues(self, x: int, y: int):
         """
