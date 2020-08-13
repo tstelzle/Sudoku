@@ -1,21 +1,44 @@
 # Sudoku
 
-## Vorgehen
-1. Sudoku-Aufbau (Skalierbarkeit -> 3x3 -- 4x4 -- 5x5 ...)
-1. Sudoku-Problem erstellen
-    * Random Lsg. und prüfen ob lösbar
-    * Korrekte Lsg. erstellen (Verwendung von Code scnipseln für den späteren Sudoku-Löser)
-3. Sudoku Lösen
-    * Alg. 1: Brute Force & Backtracking
-    * Alg. 2: alle möglichen merken -> gegeneinander ausschließen
-    * Alg. 3: ILP / SMT
-    * Alg. 4: Brute Force & dynamisches Backtracking
-    * Alg. 5: Exact Cover (Mathematische Lösung)
+## About
+This is an implementation of various sudoku algorithms.
+First of all the algorithms will be used to generate a problem, with a possible solution.
+Afterwards the algorithms should be adjusted to solve the generated problem independent of the building of the sudoku problem.
 
-## Backend
-* Sudoku-Feld Speicherung
-    * Eine Einheit (Liste von Listen): 3x3 (4x4 ...) Feld
-    * Sudoku (Liste von Listen): 3x3 (4x4 ...) an Einheiten
-    * Dictionary oder Array -> Geschwindigkeit oder Lesbarkeit im Code
+### Algorithms
+1. Brute Force & Backtracking (Iterative & Recursive)
+2. ILP / SMT
+3. Brute Force With Dynamic Backtracking
+4. Exect Cover (Mathematical Solution)
+5. Random Insert Of Numbers -> Test For Working Solution
 
-## Frontend
+## Explanation Of The Implementation
+The sudoku board is build with the classes inside the 'Board' directory.
+The picture clarifies the board structure.
+The size of the sudoku is always a sqare. In the picture the size of the sudoku board is three. The following explanation will always use the picture size. The size can be adjusted to an positiven integer number and is therefore scaleable.
+
+In the picture below the 'Board' uses three 'BoardRow' and each 'BoardRow' consists of three 'Field'.
+Each 'Field' is an array of three 'FieldRow'. The 'FieldRow' is an array of three integers.
+An Empty value is either represented by 'None' or '-1'.
+
+![BoardStructure](BoardStructure.png)
+
+All algorithms are in the 'ProblemGenerator' directory. Each of them extends the abstract class 'ProblemBaseClass'. The 'ProblemBaseClass' defines two methods. The method 'returnProblem()' should set the board with a sudoku problem. The 'returnProblemSolution()' should return a solution.
+The difficulty parameter in the 'returnProblem()' function is a constant, which specifies how many values on the board are not set.
+
+The PdfService will print, if called, a pdf with the given board. The method to use is 'printSudoku()', with the only parameter being the title and name of the pdf. These will be put in the 'generated' directory.
+
+The command line will also print the board if specified. And for now also prints some information about the sudoku board.
+
+## Running
+
+### Docker
+You can run the application inside a docker container.
+Therefore you have to follow theses steps:
+1. make build-image
+2. make container
+3. make run
+
+### Local
+Without docker you need to install python3 on your machine and add the modules specified in the 'requirements.txt'.
+Then you can start the application with 'python main.py'.
