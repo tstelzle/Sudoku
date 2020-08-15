@@ -40,26 +40,23 @@ class RecursiveBacktracking(ProblemFinder):
         x = 0
         y = 0
         val_index = 0
-        count = 0
         while not finished:
-            new_parameter = self.recursive(x, y, val_index, count)
+            new_parameter = self.recursive(x, y, val_index)
             finished = new_parameter[0]
             x = new_parameter[1]
             y = new_parameter[2]
             val_index = new_parameter[3]
-            count = new_parameter[4]
 
-    def recursive(self, x: int, y: int, val_index: int, count: int):
+    def recursive(self, x: int, y: int, val_index: int):
         """
         Checks for this position if the value fits.
         :param x: x position in the sudoku board
         :param y: y position in the sudoku board
         :param val_index: index for which value to use from the set_values
-        :param count: counts the amount of calls for this method
         :return: an array of the values for the new method call
         """
         if y == self.board.getBoardLength() and x == 0:
-            return [True, x, y, val_index, count]
+            return [True, x, y, val_index]
 
         if y < self.board.getBoardLength() and x < self.board.getBoardLength():
             val = self.set_values[get_identifier(x, y)][val_index]
@@ -71,17 +68,17 @@ class RecursiveBacktracking(ProblemFinder):
                 self.board.setValue(x, y, val)
                 self.set_values[get_identifier(x, y)].remove(val)
                 if x == self.board.getBoardLength() - 1:
-                    return [False, 0, y + 1, 0, count + 1]
+                    return [False, 0, y + 1, 0]
                 else:
-                    return [False, x + 1, y, 0, count + 1]
+                    return [False, x + 1, y, 0]
             elif val_index + 1 >= len(self.set_values[get_identifier(x, y)]):
                 self.board.setValue(x, y, -1)
                 if x == 0:
-                    return [False, self.board.getBoardLength() - 1, y - 1, 0, count + 1]
+                    return [False, self.board.getBoardLength() - 1, y - 1, 0]
                 else:
-                    return [False, x - 1, y, 0, count + 1]
+                    return [False, x - 1, y, 0]
             else:
-                return [False, x, y, val_index + 1, count + 1]
+                return [False, x, y, val_index + 1]
 
     def returnProblem(self, difficulty: difficulties):
         if self.board.getValue(0, 0) is None:
