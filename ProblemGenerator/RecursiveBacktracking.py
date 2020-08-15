@@ -32,37 +32,56 @@ class RecursiveBacktracking(ProblemFinder):
     def __init__(self, board: Board):
         super().__init__(board)
         self.board = board
-        self.setValues = {}
+        self.set_values = {}
         self.initialize_set_values()
 
     def returnProblemSolution(self):
-        self.recursive(0, 0, 0, 1, 0)
+        finished = False
+        x = 0
+        y = 0
+        val_index = 0
+        count = 0
+        while not finished:
+            new_parameter = self.recursive(x, y, val_index, count)
+            finished = new_parameter[0]
+            x = new_parameter[1]
+            y = new_parameter[2]
+            val_index = new_parameter[3]
+            count = new_parameter[4]
 
-    def recursive(self, x: int, y: int, val_index: int, tried: int, count: int):
+    def recursive(self, x: int, y: int, val_index: int, count: int):
+        """
+        Checks for this position if the value fits.
+        :param x: x position in the sudoku board
+        :param y: y position in the sudoku board
+        :param val_index: index for which value to use from the set_values
+        :param count: counts the amount of calls for this method
+        :return: an array of all the input values
+        """
         if y == self.board.getBoardLength() and x == 0:
-            return
+            return [True, x, y, val_index, count]
 
         if y < self.board.getBoardLength() and x < self.board.getBoardLength():
-            val = self.setValues[get_identifier(x, y)][val_index]
+            val = self.set_values[get_identifier(x, y)][val_index]
             row = self.checkRow(y, val)
             column = self.checkColumn(x, val)
             box = self.checkBox(x, y, val)
             if row and column and box:
                 self.reset_following_set_values(x, y)
                 self.board.setValue(x, y, val)
-                self.setValues[get_identifier(x, y)].remove(val)
+                self.set_values[get_identifier(x, y)].remove(val)
                 if x == self.board.getBoardLength() - 1:
-                    self.recursive(0, y + 1, 0, 1, count + 1)
+                    return [False, 0, y + 1, 0, count + 1]
                 else:
-                    self.recursive(x + 1, y, 0, 1, count + 1)
-            elif tried >= len(self.setValues[get_identifier(x, y)]):
+                    return [False, x + 1, y, 0, count + 1]
+            elif val_index + 1 >= len(self.set_values[get_identifier(x, y)]):
                 self.board.setValue(x, y, -1)
                 if x == 0:
-                    self.recursive(self.board.getBoardLength() - 1, y - 1, 0, 1, count + 1)
+                    return [False, self.board.getBoardLength() - 1, y - 1, 0, count + 1]
                 else:
-                    self.recursive(x - 1, y, 0, 1, count + 1)
+                    return [False, x - 1, y, 0, count + 1]
             else:
-                self.recursive(x, y, val_index + 1, tried + 1, count + 1)
+                return [False, x, y, val_index + 1, count + 1]
 
     def returnProblem(self, difficulty: difficulties):
         if self.board.getValue(0, 0) is None:
@@ -79,7 +98,7 @@ class RecursiveBacktracking(ProblemFinder):
         """
         for x in range(0, self.board.getBoardLength()):
             for y in range(0, self.board.getBoardLength()):
-                self.setValues[get_identifier(x, y)] = random_list(self.board.getBoardLength() + 1)
+                self.set_values[get_identifier(x, y)] = random_list(self.board.getBoardLength() + 1)
 
     def reset_following_set_values(self, x: int, y: int):
         """
@@ -89,7 +108,7 @@ class RecursiveBacktracking(ProblemFinder):
         :return: None
         """
         for x_1 in range(x + 1, self.board.getBoardLength()):
-            self.setValues[get_identifier(x_1, y)] = random_list(self.board.getBoardLength() + 1)
+            self.set_values[get_identifier(x_1, y)] = random_list(self.board.getBoardLength() + 1)
         for y_1 in range(y + 1, self.board.getBoardLength()):
             for x_1 in range(0, self.board.getBoardLength()):
-                self.setValues[get_identifier(x_1, y_1)] = random_list(self.board.getBoardLength() + 1)
+                self.set_values[get_identifier(x_1, y_1)] = random_list(self.board.getBoardLength() + 1)
