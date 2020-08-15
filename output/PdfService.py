@@ -1,3 +1,5 @@
+import os
+
 import bs4
 import pdfkit
 
@@ -9,11 +11,12 @@ class PdfPrinter():
     def __init__(self, board: Board):
         self.board = board
 
-    def printHtml(self, title: str):
+    def printHtml(self, title: str, outputName: str):
         """
         Gnerates a html template for the given board with the given title.
 
         :param title: Title of the pdf
+        :param outputName: filename of the pdf
         :return: filename of the gnerated tempalte
         """
         with open('output/template.html') as template:
@@ -57,24 +60,26 @@ class PdfPrinter():
 
         soup.body.append(new_table)
 
-        fileName = 'generated/' + title + ".html"
+        fileName = 'generated/tmp/.' + outputName + ".html"
 
         with open(fileName, 'w') as output:
             output.write(soup.prettify())
 
         return fileName
 
-    def printSudoku(self, title: str):
+    def printSudoku(self, title: str, outputName: str):
         """
         Builds the pdf with from the given template.
 
         :param title: title of the pdf
+        :param outputName: filename of the pdf
         """
-        fileName = self.printHtml(title)
-        output = 'generated/' + title + '.pdf'
+        fileName = self.printHtml(title, outputName)
+        output = 'generated/' + outputName + '.pdf'
         options = {
             'orientation': 'Landscape',
             'title': title,
             'page-size': 'A4'
         }
         pdfkit.from_file(fileName, output, css='output/gutenberg.css', options=options)
+        os.remove(fileName)

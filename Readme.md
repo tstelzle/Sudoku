@@ -39,6 +39,9 @@ Therefore you have to follow theses steps:
 2. make container
 3. make run
 
+With the parameter 'SIZE' you can specifiy the size of the board. For example you can switch the default boardsize from three to two with: ```make run SIZE=2```
+
 ### Local
 Without docker you need to install python3 on your machine and add the modules specified in the 'requirements.txt'.
 Then you can start the application with 'python main.py'.
+You are not going to be able to print an pdf as this uses the 'wkhtmltopdf' appliaction. Therefore you would have to adjust the 'main.py' to not print pdf's or you install the 'wkhtmltopdf' on your system locally. (https://wkhtmltopdf.org/)
