@@ -56,7 +56,7 @@ class RecursiveBacktracking(ProblemFinder):
         :param y: y position in the sudoku board
         :param val_index: index for which value to use from the set_values
         :param count: counts the amount of calls for this method
-        :return: an array of all the input values
+        :return: an array of the values for the new method call
         """
         if y == self.board.getBoardLength() and x == 0:
             return [True, x, y, val_index, count]
