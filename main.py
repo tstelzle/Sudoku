@@ -15,7 +15,6 @@ def runSolution(sudoku: Board, algorithmClass: ProblemBaseClass):
     :param algorithmClass: the class of the algorithm to use
     :return: the sudoku board
     """
-
     algorithmus = algorithmClass(sudoku)
     pdfPrinter = PdfService.PdfPrinter(sudoku)
     print('The Sudoku Solution:')

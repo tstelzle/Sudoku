@@ -60,7 +60,9 @@ class PdfPrinter():
 
         soup.body.append(new_table)
 
-        fileName = 'generated/tmp/.' + outputName + ".html"
+        if not os.path.exists('generated'):
+            os.makedirs('generated')
+        fileName = 'generated/.' + outputName + ".html"
 
         with open(fileName, 'w') as output:
             output.write(soup.prettify())
