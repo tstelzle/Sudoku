@@ -1,3 +1,5 @@
+import os
+
 import bs4
 import pdfkit
 
@@ -9,11 +11,12 @@ class PdfPrinter:
     def __init__(self, board: Board):
         self.board = board
 
-    def print_html(self, title: str):
+    def print_html(self, title: str, output_name: str):
         """
         Generates a html template for the given board with the given title.
 
         :param title: Title of the pdf
+        :param output_name: filename of the pdf
         :return: filename of the generated template
         """
         with open('output/template.html') as template:
@@ -50,7 +53,8 @@ class PdfPrinter:
                             elem = soup.new_tag('td')
                         elem_div = soup.new_tag('div',
                                                 style="text-align: center; line-height: "
-                                                      "30px; height: 30px; width: 20px")
+                                                      "30px; "
+                                                      "height: 30px; width: 20px")
                         if val != -1:
                             elem_div.insert(1, str(val))
                         elem.append(elem_div)
@@ -59,24 +63,28 @@ class PdfPrinter:
 
         soup.body.append(new_table)
 
-        file_name = 'generated/' + title + ".html"
+        if not os.path.exists('generated'):
+            os.makedirs('generated')
+        file_name = 'generated/.' + output_name + ".html"
 
         with open(file_name, 'w') as output:
             output.write(soup.prettify())
 
         return file_name
 
-    def print_sudoku(self, title: str):
+    def print_sudoku(self, title: str, output_name: str):
         """
         Builds the pdf with from the given template.
 
         :param title: title of the pdf
+        :param output_name: filename of the pdf
         """
-        file_name = self.print_html(title)
-        output = 'generated/' + title + '.pdf'
+        file_name = self.print_html(title, output_name)
+        output = 'generated/' + output_name + '.pdf'
         options = {
             'orientation': 'Landscape',
             'title': title,
             'page-size': 'A4'
         }
         pdfkit.from_file(file_name, output, css='output/gutenberg.css', options=options)
+        os.remove(file_name)
