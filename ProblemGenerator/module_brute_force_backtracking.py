@@ -29,10 +29,10 @@ def random_list(length: int):
 
 class BruteForceBacktracking(ProblemFinder):
 
-    def __init__(self, board: Board):
-        super().__init__(board)
+    def __init__(self, board: Board, seed: int):
+        super().__init__(board, seed)
         self.board = board
-        self.setValues = {}
+        self.set_values = {}
         self.initialize_set_values()
 
     def return_problem_solution(self):
@@ -43,7 +43,7 @@ class BruteForceBacktracking(ProblemFinder):
                 if y == self.board.get_board_length() and x == 0:
                     return
                 tried = []
-                array = self.setValues[get_identifier(x, y)]
+                array = self.set_values[get_identifier(x, y)]
                 for val in array:
                     row = self.check_row(y, val)
                     column = self.check_column(x, val)
@@ -52,14 +52,14 @@ class BruteForceBacktracking(ProblemFinder):
                     if row and column and box:
                         self.reset_following_set_values(x, y)
                         self.board.set_value(x, y, val)
-                        self.setValues[get_identifier(x, y)].remove(val)
+                        self.set_values[get_identifier(x, y)].remove(val)
                         if x == self.board.get_board_length() - 1:
                             x = 0
                             y += 1
                         else:
                             x += 1
                         break
-                    elif len(tried) >= len(self.setValues[get_identifier(x, y)]):
+                    elif len(tried) >= len(self.set_values[get_identifier(x, y)]):
                         self.board.set_value(x, y, -1)
                         if x == 0:
                             y -= 1
@@ -83,7 +83,7 @@ class BruteForceBacktracking(ProblemFinder):
         """
         for x in range(0, self.board.get_board_length()):
             for y in range(0, self.board.get_board_length()):
-                self.setValues[get_identifier(x, y)] = random_list(self.board.get_board_length() + 1)
+                self.set_values[get_identifier(x, y)] = random_list(self.board.get_board_length() + 1)
 
     def reset_following_set_values(self, x: int, y: int):
         """
@@ -93,7 +93,7 @@ class BruteForceBacktracking(ProblemFinder):
         :return: None
         """
         for x_1 in range(x + 1, self.board.get_board_length()):
-            self.setValues[get_identifier(x_1, y)] = random_list(self.board.get_board_length() + 1)
+            self.set_values[get_identifier(x_1, y)] = random_list(self.board.get_board_length() + 1)
         for y_1 in range(y + 1, self.board.get_board_length()):
             for x_1 in range(0, self.board.get_board_length()):
-                self.setValues[get_identifier(x_1, y_1)] = random_list(self.board.get_board_length() + 1)
+                self.set_values[get_identifier(x_1, y_1)] = random_list(self.board.get_board_length() + 1)

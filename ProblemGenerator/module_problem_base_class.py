@@ -1,4 +1,5 @@
 import math
+import random
 from abc import ABC, abstractmethod
 
 import ProblemGenerator.difficulties as difficulties
@@ -8,8 +9,9 @@ from Board.module_board import Board
 class ProblemFinder(ABC):
 
     @abstractmethod
-    def __init__(self, board: Board):
+    def __init__(self, board: Board, seed: int):
         self.board = board
+        random.seed(seed)
 
     @abstractmethod
     def return_problem(self, difficulty: difficulties):

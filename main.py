@@ -1,3 +1,4 @@
+import copy
 import sys
 import threading
 import time
@@ -11,6 +12,10 @@ from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
 from output import module_pdf_service
 
 
+def get_seed():
+    return int(time.time())
+
+
 def get_timestamp():
     return str(int(time.time()))
 
@@ -19,14 +24,16 @@ def get_log_file_name(class_name: str):
     return class_name + '_' + get_timestamp()
 
 
-def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, log_name=None):
+def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, log_name=None):
     """
     Runs the given algorithm and returns the sudoku solution.
+    :param log_name: log file name
+    :param seed: seed value
     :param sudoku: the sudoku board
     :param algorithm_class: the class of the algorithm to use
     :return: the sudoku board
     """
-    algorithm = algorithm_class(sudoku)
+    algorithm = algorithm_class(sudoku, seed)
     pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     if log_name is None:
         log_name = get_log_file_name(algorithm_class.__name__)
@@ -45,6 +52,7 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, log_
 def get_file_name(sudoku: Board, title: str, algorithm_name: str):
     """
     Returns the filename of the pdf to make, with a timestamp
+    :param algorithm_name: classname of the algorithm
     :param sudoku: the sudoku board
     :param title: the title of the pdf
     :return: filename
@@ -54,15 +62,18 @@ def get_file_name(sudoku: Board, title: str, algorithm_name: str):
     return title + '_' + algorithm_name + '_' + timestamp + '_' + board_size
 
 
-def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty: difficulties, log_name=None):
+def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, difficulty: difficulties,
+                log_name=None):
     """
     Runs the given algorithm and returns the sudoku problem.
+    :param log_name: log file name
+    :param seed: seed value
     :param sudoku: the sudoku board
     :param algorithm_class: the class of the algorithm to use
     :param difficulty: the difficulty of the problem specified by the enum
     :return: the sudoku board
     """
-    algorithm = algorithm_class(sudoku)
+    algorithm = algorithm_class(sudoku, seed)
     pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     title = 'Sudoku-Problem'
     if log_name is None:
@@ -74,17 +85,19 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, diffi
     return sudoku
 
 
-def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty=difficulties.HARD):
+def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int,
+                             difficulty=difficulties.HARD):
     """
     Runs the two methods 'runSolution' and 'runProblem' to calculate the sudoku solution and problem.
+    :param seed: seed value
     :param sudoku: the sudoku board
     :param algorithm_class: the class of the algorithm to use
     :param difficulty: the difficulty of the problem specified by the enum
     :return:
     """
     log_name = get_log_file_name(algorithm_class.__name__)
-    sudoku_sol = run_solution(sudoku, algorithm_class, log_name)
-    sudoku_prob = run_problem(sudoku_sol, algorithm_class, difficulty, log_name)
+    sudoku_sol = run_solution(sudoku, algorithm_class, seed, log_name)
+    sudoku_prob = run_problem(sudoku_sol, algorithm_class, seed, difficulty, log_name)
     return [sudoku_sol, sudoku_prob]
 
 
@@ -115,14 +128,17 @@ def main():
     board_size = read_board_parameter() if read_board_parameter() > 0 else 3
 
     sudoku = Board(board_size)
-    recursiveThread = threading.Thread(target=run_solution_and_problem, args=(sudoku, RecursiveBacktracking))
-    recursiveThread.start()
+    sudoku_2 = copy.deepcopy(sudoku)
 
-    sudoku_2 = Board(board_size)
-    iterative_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_2, BruteForceBacktracking))
+    seed = get_seed()
+
+    recursive_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku, RecursiveBacktracking, seed))
+    recursive_thread.start()
+
+    iterative_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_2, BruteForceBacktracking, seed))
     iterative_thread.start()
 
-    recursiveThread.join()
+    recursive_thread.join()
     iterative_thread.join()
 
 
