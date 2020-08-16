@@ -3,7 +3,7 @@ import os
 import bs4
 import pdfkit
 
-from Board.Board import Board
+from Board.module_board import Board
 
 
 class PdfPrinter:
@@ -33,7 +33,8 @@ class PdfPrinter:
         last_row = 1
         for boardRow in self.board.board:
             for field in boardRow.boardRow:
-                if row_counter % self.board.length == 0 and last_row * self.board.length != self.board.getBoardLength():
+                if row_counter % self.board.length == 0 \
+                        and last_row * self.board.length != self.board.get_board_length():
                     row_counter = 1
                     last_row += 1
                     column = soup.new_tag('tr', style="border-bottom: 5px solid black")
@@ -44,14 +45,15 @@ class PdfPrinter:
                     column_counter = 1
                     for val in field.field[i].fieldRow:
                         if column_counter % self.board.length == 0 and (
-                                i + 1) * self.board.length != self.board.getBoardLength():
+                                i + 1) * self.board.length != self.board.get_board_length():
                             column_counter = 1
                             elem = soup.new_tag('td', style="border-right: 5px solid black")
                         else:
                             column_counter += 1
                             elem = soup.new_tag('td')
                         elem_div = soup.new_tag('div',
-                                                style="text-align: center; line-height: 30px; "
+                                                style="text-align: center; line-height: "
+                                                      "30px; "
                                                       "height: 30px; width: 20px")
                         if val != -1:
                             elem_div.insert(1, str(val))

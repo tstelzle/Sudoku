@@ -1,4 +1,4 @@
-from Board.Field import Field
+from Board.module_field import Field
 
 
 class BoardRow:
@@ -10,12 +10,12 @@ class BoardRow:
     def __init__(self, length=3):
         """
         The constructor of the @class BoardRow.
-        :param length: the lenght of the BoardRow list.
+        :param length: the length of the BoardRow list.
         """
         self.boardRow = [Field(length) for i in range(length)]
         self.length = length
 
-    def printBoardRow(self):
+    def print_board_row(self):
         """
         Prints all the lines in the Sudoku from the given boardRow
         :return: None
@@ -23,14 +23,14 @@ class BoardRow:
         for i in range(self.length):
             line = "|"
             for field in self.boardRow:
-                line += field.printFieldRow(i)
+                line += field.print_field_row(i)
             print(line)
 
-    def boardRowToString(self):
-        boardRowString = ""
+    def board_row_to_string(self):
+        board_row_string = ""
         for i in range(self.length):
             line = "|"
             for field in self.boardRow:
-                line += field.printFieldRow(i)
-            boardRowString += line + '\n'
-        return boardRowString
+                line += field.print_field_row(i)
+            board_row_string += line + '\n'
+        return board_row_string

@@ -2,13 +2,13 @@ import sys
 import time
 
 import ProblemGenerator.difficulties as difficulties
-from Board.Board import Board
-from ProblemGenerator import BruteForceBacktracking
-from ProblemGenerator import ProblemBaseClass
-from output import PdfService
+from Board.module_board import Board
+from ProblemGenerator import module_problem_base_class
+from ProblemGenerator import module_recursive_backtracking
+from output import module_pdf_service
 
 
-def run_solution(sudoku: Board, algorithm_class: ProblemBaseClass):
+def run_solution(sudoku: Board, algorithm_class: module_problem_base_class):
     """
     Runs the given algorithm and returns the sudoku solution.
     :param sudoku: the sudoku board
@@ -16,13 +16,13 @@ def run_solution(sudoku: Board, algorithm_class: ProblemBaseClass):
     :return: the sudoku board
     """
     algorithm = algorithm_class(sudoku)
-    pdf_printer = PdfService.PdfPrinter(sudoku)
+    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     print('The Sudoku Solution:')
     start_time = time.time()
-    algorithm.returnProblemSolution()
+    algorithm.return_problem_solution()
     end_time = time.time()
     print('Duration: ' + str(end_time - start_time) + "s")
-    sudoku.printBoard()
+    sudoku.print_board()
     title = 'Sudoku-Solution'
     pdf_printer.print_sudoku(title, get_file_name(sudoku, title))
     return sudoku
@@ -40,7 +40,7 @@ def get_file_name(sudoku: Board, title: str):
     return title + "_" + timestamp + "_" + board_size
 
 
-def run_problem(sudoku: Board, algorithm_class: ProblemBaseClass, difficulty: difficulties):
+def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty: difficulties):
     """
     Runs the given algorithm and returns the sudoku problem.
     :param sudoku: the sudoku board
@@ -49,16 +49,16 @@ def run_problem(sudoku: Board, algorithm_class: ProblemBaseClass, difficulty: di
     :return: the sudoku board
     """
     algorithm = algorithm_class(sudoku)
-    pdf_printer = PdfService.PdfPrinter(sudoku)
+    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     print('The Sudoku Problem:')
-    algorithm.returnProblem(difficulty)
-    sudoku.printBoard()
+    algorithm.return_problem(difficulty)
+    sudoku.print_board()
     title = 'Sudoku-Problem'
     pdf_printer.print_sudoku(title, get_file_name(sudoku, title))
     return sudoku
 
 
-def run_solution_and_problem(sudoku: Board, algorithm_class: ProblemBaseClass, difficulty=difficulties.HARD):
+def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty=difficulties.HARD):
     """
     Runs the two methods 'runSolution' and 'runProblem' to calculate the sudoku solution and problem.
     :param sudoku: the sudoku board
@@ -98,7 +98,7 @@ def main():
     board_size = read_board_parameter() if read_board_parameter() > 0 else 3
     sudoku = Board(board_size)
     print_board_information(sudoku)
-    run_solution_and_problem(sudoku, BruteForceBacktracking.BruteForceBacktracking)
+    run_solution_and_problem(sudoku, module_recursive_backtracking.RecursiveBacktracking)
 
 
 if __name__ == "__main__":

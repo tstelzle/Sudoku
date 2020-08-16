@@ -1,8 +1,8 @@
 # seed the pseudorandom number generator
 from random import seed
 
-from Board.Board import Board
-from ProblemGenerator.ProblemBaseClass import ProblemFinder
+from Board.module_board import Board
+from ProblemGenerator.module_problem_base_class import ProblemFinder
 
 
 class RandomProblem(ProblemFinder):
@@ -11,7 +11,7 @@ class RandomProblem(ProblemFinder):
     def __init__(self, board: Board):
         self.board = board
 
-    def returnProblem(self, s: int):
+    def return_problem(self, s: int):
         """
 
         :param s: value for the seed
@@ -26,7 +26,7 @@ class RandomProblem(ProblemFinder):
         # self.board.setValue(4, 0, 1)
         # self.board.setValue(4, 4, 1)
 
-    def returnProblemSolution(self):
+    def return_problem_solution(self):
         """
 
         :return:

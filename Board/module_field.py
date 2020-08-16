@@ -1,4 +1,4 @@
-from Board.FieldRow import FieldRow
+from Board.module_field_row import FieldRow
 
 
 class Field:
@@ -16,30 +16,30 @@ class Field:
         self.field = [FieldRow(length) for i in range(length)]
         self.length = length
 
-    def getValue(self, pos):
+    def get_value(self, pos):
         """
         Returns None or the value which is written in field.
 
         :param pos: The position in the board counted from top left to bottom right.
         :return: The value in the field or None
         """
-        fieldListPos = pos % self.length
-        fieldRowListPos = pos - self.length * fieldListPos
-        if (self.field[fieldListPos][fieldRowListPos]):
-            return self.field[fieldListPos][fieldRowListPos]
+        field_list_pos = pos % self.length
+        field_row_list_pos = pos - self.length * field_list_pos
+        if self.field[field_list_pos][field_row_list_pos]:
+            return self.field[field_list_pos][field_row_list_pos]
         else:
             return None
 
-    def printFieldRow(self, posFieldRow):
+    def print_field_row(self, pos_field_row):
         """
-        Prints the row in the field given by posFieldRow
-        :param posFieldRow:
-        :return: String with the values in the fieldRow
+        Prints the row in the field given by pos_field_row
+        :param pos_field_row:
+        :return: String with the values in the field_row
         """
-        fieldRow = self.field[posFieldRow].fieldRow
+        field_row = self.field[pos_field_row].fieldRow
         output = " "
-        for val in fieldRow:
-            if val == None or val == -1:
+        for val in field_row:
+            if val is None or val == -1:
                 output = output + '__ '
             elif val < 10:
                 output = output + ' ' + str(val) + ' '
