@@ -32,3 +32,6 @@ run-master:
 	$(RUN)
 	git checkout $(BRANCH) $(IGNORE-OUTPUT)
 	git stash pop $(IGNORE-OUTPUT)
+
+ssh:
+	docker exec -it $(CONTAINER-NAME) bash

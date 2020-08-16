@@ -1,15 +1,25 @@
 import sys
+import threading
 import time
 
 import ProblemGenerator.difficulties as difficulties
+import Utils.module_logger as log
 from Board.module_board import Board
 from ProblemGenerator import module_problem_base_class
-from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
 from ProblemGenerator.module_brute_force_backtracking import BruteForceBacktracking
+from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
 from output import module_pdf_service
 
 
-def run_solution(sudoku: Board, algorithm_class: module_problem_base_class):
+def get_timestamp():
+    return str(int(time.time()))
+
+
+def get_log_file_name(class_name: str):
+    return class_name + '_' + get_timestamp()
+
+
+def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, log_name=None):
     """
     Runs the given algorithm and returns the sudoku solution.
     :param sudoku: the sudoku board
@@ -18,30 +28,33 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class):
     """
     algorithm = algorithm_class(sudoku)
     pdf_printer = module_pdf_service.PdfPrinter(sudoku)
-    print('The Sudoku Solution:')
+    if log_name is None:
+        log_name = get_log_file_name(algorithm_class.__name__)
+    title = 'Sudoku-Solution'
+    log.append_to_log(log_name, title)
     start_time = time.time()
     algorithm.return_problem_solution()
     end_time = time.time()
-    print('Duration: ' + str(end_time - start_time) + "s")
-    sudoku.print_board()
-    title = 'Sudoku-Solution'
-    pdf_printer.print_sudoku(title, get_file_name(sudoku, title))
+    duration_string = 'Duration: ' + str(end_time - start_time) + 's'
+    log.append_to_log(log_name, duration_string)
+    sudoku.log_board(log_name)
+    pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return sudoku
 
 
-def get_file_name(sudoku: Board, title: str):
+def get_file_name(sudoku: Board, title: str, algorithm_name: str):
     """
     Returns the filename of the pdf to make, with a timestamp
     :param sudoku: the sudoku board
     :param title: the title of the pdf
     :return: filename
     """
-    timestamp = str(int(time.time()))
+    timestamp = get_timestamp()
     board_size = str(sudoku.length)
-    return title + "_" + timestamp + "_" + board_size
+    return title + '_' + algorithm_name + '_' + timestamp + '_' + board_size
 
 
-def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty: difficulties):
+def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, difficulty: difficulties, log_name=None):
     """
     Runs the given algorithm and returns the sudoku problem.
     :param sudoku: the sudoku board
@@ -51,11 +64,13 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, diffi
     """
     algorithm = algorithm_class(sudoku)
     pdf_printer = module_pdf_service.PdfPrinter(sudoku)
-    print('The Sudoku Problem:')
-    algorithm.return_problem(difficulty)
-    sudoku.print_board()
     title = 'Sudoku-Problem'
-    pdf_printer.print_sudoku(title, get_file_name(sudoku, title))
+    if log_name is None:
+        log_name = get_log_file_name(algorithm_class.__name__)
+    log.append_to_log(log_name, title)
+    algorithm.return_problem(difficulty)
+    log.append_to_log(log_name, sudoku.board_to_string())
+    pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return sudoku
 
 
@@ -67,8 +82,9 @@ def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base
     :param difficulty: the difficulty of the problem specified by the enum
     :return:
     """
-    sudoku_sol = run_solution(sudoku, algorithm_class)
-    sudoku_prob = run_problem(sudoku_sol, algorithm_class, difficulty)
+    log_name = get_log_file_name(algorithm_class.__name__)
+    sudoku_sol = run_solution(sudoku, algorithm_class, log_name)
+    sudoku_prob = run_problem(sudoku_sol, algorithm_class, difficulty, log_name)
     return [sudoku_sol, sudoku_prob]
 
 
@@ -97,12 +113,17 @@ def read_board_parameter():
 
 def main():
     board_size = read_board_parameter() if read_board_parameter() > 0 else 3
+
     sudoku = Board(board_size)
-    print_board_information(sudoku)
-    run_solution_and_problem(sudoku, RecursiveBacktracking)
+    recursiveThread = threading.Thread(target=run_solution_and_problem, args=(sudoku, RecursiveBacktracking))
+    recursiveThread.start()
 
     sudoku_2 = Board(board_size)
-    run_solution_and_problem(sudoku_2, BruteForceBacktracking)
+    iterative_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_2, BruteForceBacktracking))
+    iterative_thread.start()
+
+    recursiveThread.join()
+    iterative_thread.join()
 
 
 if __name__ == "__main__":
