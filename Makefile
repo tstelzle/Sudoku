@@ -5,7 +5,8 @@ IMAGE-NAME := python-env-sudoku
 CONTAINER-NAME := sudoku
 MOUNT-DIR := $(PWD)
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-RUN := docker exec -it -w /usr/src $(CONTAINER-NAME) python main.py
+SIZE := 3
+RUN := docker exec -it -w /usr/src $(CONTAINER-NAME) python main.py $(SIZE)
 IGNORE-OUTPUT := > /dev/null 2>&1
 
 .PHONY: default build-image container run run-master

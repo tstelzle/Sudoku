@@ -9,13 +9,13 @@ Afterwards the algorithms should be adjusted to solve the generated problem inde
 1. Brute Force & Backtracking (Iterative & Recursive)
 2. ILP / SMT
 3. Brute Force With Dynamic Backtracking
-4. Exect Cover (Mathematical Solution)
+4. Exact Cover (Mathematical Solution)
 5. Random Insert Of Numbers -> Test For Working Solution
 
 ## Explanation Of The Implementation
 The sudoku board is build with the classes inside the 'Board' directory.
 The picture clarifies the board structure.
-The size of the sudoku is always a sqare. In the picture the size of the sudoku board is three. The following explanation will always use the picture size. The size can be adjusted to an positiven integer number and is therefore scaleable.
+The size of the sudoku is always a square. In the picture the size of the sudoku board is three. The following explanation will always use the picture size. The size can be adjusted to a positive integer number and is therefore scalable.
 
 In the picture below the 'Board' uses three 'BoardRow' and each 'BoardRow' consists of three 'Field'.
 Each 'Field' is an array of three 'FieldRow'. The 'FieldRow' is an array of three integers.
@@ -39,6 +39,9 @@ Therefore you have to follow theses steps:
 2. make container
 3. make run
 
+With the parameter 'SIZE' you can specify the size of the board. For example you can switch the default board size from three to two with: ```make run SIZE=2```
+
 ### Local
 Without docker you need to install python3 on your machine and add the modules specified in the 'requirements.txt'.
 Then you can start the application with 'python main.py'.
+You are not going to be able to print an pdf as this uses the 'wkhtmltopdf' application. Therefore you would have to adjust the 'main.py' to not print the pdf or you install the 'wkhtmltopdf' on your system locally. (https://wkhtmltopdf.org/)
