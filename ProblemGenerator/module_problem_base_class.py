@@ -2,6 +2,7 @@ import math
 import random
 from abc import ABC, abstractmethod
 
+import Utils.module_logger as log
 import ProblemGenerator.difficulties as difficulties
 from Board.module_board import Board
 
@@ -9,8 +10,9 @@ from Board.module_board import Board
 class ProblemFinder(ABC):
 
     @abstractmethod
-    def __init__(self, board: Board, seed: int):
+    def __init__(self, board: Board, seed: int, log_name: str):
         self.board = board
+        self.log_name = log_name
         random.seed(seed)
 
     @abstractmethod

@@ -33,10 +33,10 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     :param algorithm_class: the class of the algorithm to use
     :return: the sudoku board
     """
-    algorithm = algorithm_class(sudoku, seed)
-    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     if log_name is None:
         log_name = get_log_file_name(algorithm_class.__name__)
+    algorithm = algorithm_class(sudoku, seed, log_name)
+    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     title = 'Sudoku-Solution'
     log.append_to_log(log_name, title)
     start_time = time.time()
@@ -73,11 +73,11 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed:
     :param difficulty: the difficulty of the problem specified by the enum
     :return: the sudoku board
     """
-    algorithm = algorithm_class(sudoku, seed)
-    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
-    title = 'Sudoku-Problem'
     if log_name is None:
         log_name = get_log_file_name(algorithm_class.__name__)
+    algorithm = algorithm_class(sudoku, seed, log_name)
+    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
+    title = 'Sudoku-Problem'
     log.append_to_log(log_name, title)
     algorithm.return_problem(difficulty)
     log.append_to_log(log_name, sudoku.board_to_string())

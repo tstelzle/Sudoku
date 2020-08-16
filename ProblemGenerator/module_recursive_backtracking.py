@@ -29,8 +29,8 @@ def random_list(length: int):
 
 class RecursiveBacktracking(ProblemFinder):
 
-    def __init__(self, board: Board, seed: int):
-        super().__init__(board, seed)
+    def __init__(self, board: Board, seed: int, log_name: str):
+        super().__init__(board, seed, log_name)
         self.board = board
         self.set_values = {}
         self.initialize_set_values()
