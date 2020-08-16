@@ -4,7 +4,8 @@ import time
 import ProblemGenerator.difficulties as difficulties
 from Board.module_board import Board
 from ProblemGenerator import module_problem_base_class
-from ProblemGenerator import module_recursive_backtracking
+from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
+from ProblemGenerator.module_brute_force_backtracking import BruteForceBacktracking
 from output import module_pdf_service
 
 
@@ -98,7 +99,10 @@ def main():
     board_size = read_board_parameter() if read_board_parameter() > 0 else 3
     sudoku = Board(board_size)
     print_board_information(sudoku)
-    run_solution_and_problem(sudoku, module_recursive_backtracking.RecursiveBacktracking)
+    run_solution_and_problem(sudoku, RecursiveBacktracking)
+
+    sudoku_2 = Board(board_size)
+    run_solution_and_problem(sudoku_2, BruteForceBacktracking)
 
 
 if __name__ == "__main__":
