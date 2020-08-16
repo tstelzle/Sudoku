@@ -65,6 +65,7 @@ class PdfPrinter:
 
         if not os.path.exists('generated'):
             os.makedirs('generated')
+            os.chmod('generated', 0o777)
         file_name = 'generated/.' + output_name + ".html"
 
         with open(file_name, 'w') as output:
@@ -87,4 +88,5 @@ class PdfPrinter:
             'page-size': 'A4'
         }
         pdfkit.from_file(file_name, output, css='output/gutenberg.css', options=options)
+        os.chmod(output, 0o777)
         os.remove(file_name)

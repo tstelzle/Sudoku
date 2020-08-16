@@ -1,5 +1,6 @@
 import math
 
+import Utils.module_logger as log
 from Board.module_board_row import BoardRow
 
 
@@ -29,6 +30,9 @@ class Board:
         for i in range(len(self.board)):
             self.board[i].print_board_row()
             print('-' * (dashes_numbers + dashes_posts + 1))
+
+    def log_board(self, file_name: str):
+        log.append_to_log(file_name, self.board_to_string())
 
     def board_to_string(self):
         board_string = ""
