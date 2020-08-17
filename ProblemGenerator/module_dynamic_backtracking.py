@@ -56,7 +56,7 @@ class DynamicBacktracking(ProblemFinder):
             coordinates = split_identifier(id_min)
             x = coordinates[0]
             y = coordinates[1]
-            if len(self.set_values[id_min]) < self.repeat[-1]:
+            if len(self.set_values[id_min]) > self.repeat[-1]:
                 self.insert_value(id_min)
             else:
                 self.board = self.states[-1]
@@ -148,7 +148,18 @@ class DynamicBacktracking(ProblemFinder):
         self.board.set_value(x, y, val)
         for i in range(0, self.board.get_board_length()):
             self.set_values[get_identifier(i, y)].remove(val)
-            self.set_values[get_identifier(x, i)].remove(val)
+            if i != y:
+                self.set_values[get_identifier(x, i)].remove(val)
+                
+        min_x = self.get_multiplier(x) * self.board.length
+        max_x = (self.get_multiplier(x) + 1) * self.board.length
+        min_y = self.get_multiplier(y) * self.board.length
+        max_y = (self.get_multiplier(y) + 1) * self.board.length
+        for x_1 in range(min_x, max_x):
+            for y_1 in range(min_y, max_y):
+                if x_1 != x or y_1 != y:
+                    self.set_values[get_identifier(x_1, y_1)].remove(val)
+
         self.repeat[-1] += 1
         self.repeat.append(0)
         self.states.append(copy.deepcopy(self.board))
