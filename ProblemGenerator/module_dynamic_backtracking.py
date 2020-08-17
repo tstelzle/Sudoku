@@ -50,7 +50,8 @@ class DynamicBacktracking(ProblemFinder):
         self.board = board
         self.set_values = {}
         self.initialize_set_values()
-        self.states = [copy.deepcopy(self.board)]
+        self.board_states = [copy.deepcopy(self.board)]
+        self.values_states = [copy.deepcopy(self.set_values)]
         self.repeat = [0]
 
     def return_problem_solution(self):
@@ -65,42 +66,11 @@ class DynamicBacktracking(ProblemFinder):
             if len(self.set_values[id_min]) > self.repeat[-1]:
                 self.insert_value(id_min)
             else:
-                self.board = self.states[-1]
-                del self.states[-1]
+                self.board = self.board_states[-1]
+                self.set_values = self.values_states[-1]
+                del self.board_states[-1]
+                del self.values_states[-1]
                 del self.repeat[-1]
-
-    def recursive(self, x: int, y: int, val_index: int):
-        """
-        Checks for this position if the value fits.
-        :param x: x position in the sudoku board
-        :param y: y position in the sudoku board
-        :param val_index: index for which value to use from the set_values
-        :return: an array of the values for the new method call
-        """
-        if y == self.board.get_board_length() and x == 0:
-            return [True, x, y, val_index]
-
-        if y < self.board.get_board_length() and x < self.board.get_board_length():
-            val = self.set_values[get_identifier(x, y)][val_index]
-            row = self.check_row(y, val)
-            column = self.check_column(x, val)
-            box = self.check_box(x, y, val)
-            if row and column and box:
-                self.reset_following_set_values(x, y)
-                self.board.set_value(x, y, val)
-                self.set_values[get_identifier(x, y)].remove(val)
-                if x == self.board.get_board_length() - 1:
-                    return [False, 0, y + 1, 0]
-                else:
-                    return [False, x + 1, y, 0]
-            elif val_index + 1 >= len(self.set_values[get_identifier(x, y)]):
-                self.board.set_value(x, y, -1)
-                if x == 0:
-                    return [False, self.board.get_board_length() - 1, y - 1, 0]
-                else:
-                    return [False, x - 1, y, 0]
-            else:
-                return [False, x, y, val_index + 1]
 
     def return_problem(self, difficulty: difficulties):
         if self.board.get_value(0, 0) is None:
@@ -171,4 +141,4 @@ class DynamicBacktracking(ProblemFinder):
 
         self.repeat[-1] += 1
         self.repeat.append(0)
-        self.states.append(copy.deepcopy(self.board))
+        self.board_states.append(copy.deepcopy(self.board))
