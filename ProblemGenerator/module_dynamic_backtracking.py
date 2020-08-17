@@ -142,3 +142,4 @@ class DynamicBacktracking(ProblemFinder):
         self.repeat[-1] += 1
         self.repeat.append(0)
         self.board_states.append(copy.deepcopy(self.board))
+        self.values_states.append(copy.deepcopy(self.set_values))
