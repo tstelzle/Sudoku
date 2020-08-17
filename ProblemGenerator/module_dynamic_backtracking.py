@@ -37,6 +37,12 @@ def random_list(length: int):
     return random.sample(sorted_list, len(sorted_list))
 
 
+def find_and_remove(arr: [], val: int):
+    for value in arr:
+        if value == val:
+            arr.remove(val)
+
+
 class DynamicBacktracking(ProblemFinder):
 
     def __init__(self, board: Board, seed: int, log_name: str):
@@ -141,24 +147,27 @@ class DynamicBacktracking(ProblemFinder):
         return identifier
 
     def insert_value(self, identifier: str):
+        """
+
+        :param identifier:
+        :return:
+        """
         val = self.set_values[identifier][self.repeat[-1]]
         coordinates = split_identifier(identifier)
         x = coordinates[0]
         y = coordinates[1]
         self.board.set_value(x, y, val)
         for i in range(0, self.board.get_board_length()):
-            self.set_values[get_identifier(i, y)].remove(val)
-            if i != y:
-                self.set_values[get_identifier(x, i)].remove(val)
-                
+            find_and_remove(self.set_values[get_identifier(i, y)], val)
+            find_and_remove(self.set_values[get_identifier(x, i)], val)
+
         min_x = self.get_multiplier(x) * self.board.length
         max_x = (self.get_multiplier(x) + 1) * self.board.length
         min_y = self.get_multiplier(y) * self.board.length
         max_y = (self.get_multiplier(y) + 1) * self.board.length
         for x_1 in range(min_x, max_x):
             for y_1 in range(min_y, max_y):
-                if x_1 != x or y_1 != y:
-                    self.set_values[get_identifier(x_1, y_1)].remove(val)
+                find_and_remove(self.set_values[get_identifier(x_1, y_1)], val)
 
         self.repeat[-1] += 1
         self.repeat.append(0)
