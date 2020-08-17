@@ -41,7 +41,7 @@ class BruteForceBacktracking(ProblemFinder):
         while y < self.board.get_board_length():
             while x < self.board.get_board_length():
                 if y == self.board.get_board_length() and x == 0:
-                    return
+                    return self.board
                 tried = []
                 array = self.set_values[get_identifier(x, y)]
                 for val in array:
@@ -67,7 +67,6 @@ class BruteForceBacktracking(ProblemFinder):
                         else:
                             x -= 1
                         break
-        return self.board
 
     def return_problem(self, difficulty: difficulties):
         if self.board.get_value(0, 0) is None:
