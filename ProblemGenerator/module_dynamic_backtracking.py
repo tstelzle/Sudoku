@@ -63,9 +63,6 @@ class DynamicBacktracking(ProblemFinder):
     def return_problem_solution(self):
         id_min = self.find_minimum()
         while id_min is not None:
-            coordinates = split_identifier(id_min)
-            x = coordinates[0]
-            y = coordinates[1]
             if len(self.set_values[id_min]) > self.repeat[-1]:
                 self.insert_value(id_min)
             else:
@@ -93,19 +90,6 @@ class DynamicBacktracking(ProblemFinder):
         for x in range(0, self.board.get_board_length()):
             for y in range(0, self.board.get_board_length()):
                 self.set_values[get_identifier(x, y)] = random_list(self.board.get_board_length() + 1)
-
-    def reset_following_set_values(self, x: int, y: int):
-        """
-        Reset the values in the setValues dictionary after the given x,y position.
-        :param x: x-axis of the sudoku field
-        :param y: y-axis of the sudoku field
-        :return: None
-        """
-        for x_1 in range(x + 1, self.board.get_board_length()):
-            self.set_values[get_identifier(x_1, y)] = random_list(self.board.get_board_length() + 1)
-        for y_1 in range(y + 1, self.board.get_board_length()):
-            for x_1 in range(0, self.board.get_board_length()):
-                self.set_values[get_identifier(x_1, y_1)] = random_list(self.board.get_board_length() + 1)
 
     def find_minimum(self):
         """
