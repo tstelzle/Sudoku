@@ -9,6 +9,7 @@ from Board.module_board import Board
 from ProblemGenerator import module_problem_base_class
 from ProblemGenerator.module_brute_force_backtracking import BruteForceBacktracking
 from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
+from ProblemGenerator.module_dynamic_backtracking import DynamicBacktracking
 from output import module_pdf_service
 
 
@@ -119,7 +120,7 @@ def read_board_parameter():
     Reads the input parameters. And returns the size of the board.
     :return: int
     """
-    if len(sys.argv) >= 1:
+    if len(sys.argv) > 1:
         return int(sys.argv[1])
     return -1
 
@@ -129,6 +130,7 @@ def main():
 
     sudoku = Board(board_size)
     sudoku_2 = copy.deepcopy(sudoku)
+    sudoku_3 = copy.deepcopy(sudoku)
 
     seed = get_seed()
 
@@ -138,8 +140,12 @@ def main():
     iterative_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_2, BruteForceBacktracking, seed))
     iterative_thread.start()
 
+    dynamic_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_3, DynamicBacktracking, seed))
+    dynamic_thread.start()
+
     recursive_thread.join()
     iterative_thread.join()
+    dynamic_thread.join()
 
 
 if __name__ == "__main__":

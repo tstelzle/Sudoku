@@ -83,3 +83,11 @@ class Board:
         """
         return self.board[math.floor(y / self.length)].boardRow[math.floor(x / self.length)].field[
             y % self.length].fieldRow[x % self.length]
+
+    def is_empty(self, x: int, y: int):
+        """
+        :param x: The x Coordinate of the Board
+        :param y: The y Coordinate of the Board
+        :return: bool
+        """
+        return self.get_value(x, y) is None or self.get_value(x, y) == -1
