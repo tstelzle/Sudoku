@@ -38,6 +38,12 @@ def random_list(length: int):
 
 
 def find_and_remove(arr: [], val: int):
+    """
+    Searches the value in the given array and removes it if found
+    :param arr: The array with values
+    :param val: The value to be removed
+    :return: None
+    """
     for value in arr:
         if value == val:
             arr.remove(val)
@@ -55,11 +61,8 @@ class DynamicBacktracking(ProblemFinder):
         self.repeat = [0]
 
     def return_problem_solution(self):
-        id_min = ""
+        id_min = self.find_minimum()
         while id_min is not None:
-            id_min = self.find_minimum()
-            if id_min is None:
-                return
             coordinates = split_identifier(id_min)
             x = coordinates[0]
             y = coordinates[1]
@@ -71,6 +74,8 @@ class DynamicBacktracking(ProblemFinder):
                 del self.board_states[-1]
                 del self.values_states[-1]
                 del self.repeat[-1]
+            id_min = self.find_minimum()
+        return self.board
 
     def return_problem(self, difficulty: difficulties):
         if self.board.get_value(0, 0) is None:
@@ -118,9 +123,9 @@ class DynamicBacktracking(ProblemFinder):
 
     def insert_value(self, identifier: str):
         """
-
+        Inserts a value at the position of the identifier and deletes value from depending entries in set_values
         :param identifier:
-        :return:
+        :return: None
         """
         val = self.set_values[identifier][self.repeat[-1]]
         coordinates = split_identifier(identifier)

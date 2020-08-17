@@ -67,6 +67,7 @@ class BruteForceBacktracking(ProblemFinder):
                         else:
                             x -= 1
                         break
+        return self.board
 
     def return_problem(self, difficulty: difficulties):
         if self.board.get_value(0, 0) is None:

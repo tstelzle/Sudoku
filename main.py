@@ -41,7 +41,7 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     title = 'Sudoku-Solution'
     log.append_to_log(log_name, title)
     start_time = time.time()
-    algorithm.return_problem_solution()
+    sudoku = algorithm.return_problem_solution()
     end_time = time.time()
     duration_string = 'Duration: ' + str(end_time - start_time) + 's'
     log.append_to_log(log_name, duration_string)
