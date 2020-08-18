@@ -46,6 +46,7 @@ class RecursiveBacktracking(ProblemFinder):
             x = new_parameter[1]
             y = new_parameter[2]
             val_index = new_parameter[3]
+        return self.board
 
     def recursive(self, x: int, y: int, val_index: int):
         """
