@@ -29,7 +29,6 @@ def split_identifier(identifier: str):
 def random_list(length: int):
     """
     Builds and returns a randomized array of values from one to the given length.
-
     :param length: the range for the array
     :return: randomized array of values within the given length
     """
@@ -47,6 +46,7 @@ def find_and_remove(arr: [], val: int):
     for value in arr:
         if value == val:
             arr.remove(val)
+            break
 
 
 class DynamicBacktracking(ProblemFinder):
@@ -108,7 +108,7 @@ class DynamicBacktracking(ProblemFinder):
     def insert_value(self, identifier: str):
         """
         Inserts a value at the position of the identifier and deletes value from depending entries in set_values
-        :param identifier:
+        :param identifier:Coordinates of where to insert
         :return: None
         """
         val = self.set_values[identifier][self.repeat[-1]]
