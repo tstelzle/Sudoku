@@ -135,6 +135,7 @@ def main():
     seed = get_seed()
 
     log.initialize_logger()
+    module_pdf_service.initialize_printer()
 
     recursive_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku, RecursiveBacktracking, seed))
     recursive_thread.start()
