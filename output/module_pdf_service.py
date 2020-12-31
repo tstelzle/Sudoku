@@ -6,6 +6,16 @@ import pdfkit
 from Board.module_board import Board
 
 
+def initialize_printer():
+    create_printer_dir()
+
+
+def create_printer_dir():
+    if not os.path.exists('generated'):
+        os.makedirs('generated')
+        os.chmod('generated', 0o777)
+
+
 class PdfPrinter:
 
     def __init__(self, board: Board):
@@ -63,9 +73,6 @@ class PdfPrinter:
 
         soup.body.append(new_table)
 
-        if not os.path.exists('generated'):
-            os.makedirs('generated')
-            os.chmod('generated', 0o777)
         file_name = 'generated/.' + output_name + ".html"
 
         with open(file_name, 'w') as output:
