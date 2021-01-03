@@ -72,7 +72,6 @@ class DynamicBacktracking(ProblemFinder):
                 del self.values_states[-1]
                 del self.repeat[-1]
             id_min = self.find_minimum()
-        return self.board
 
     def return_problem(self, difficulty: difficulties):
         if self.board.get_value(0, 0) is None:

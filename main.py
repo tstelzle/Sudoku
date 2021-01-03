@@ -38,20 +38,20 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     if log_name is None:
         log_name = get_log_file_name(algorithm_class.__name__)
     algorithm = algorithm_class(sudoku, seed, log_name)
-    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     title = 'Sudoku-Solution'
     log.append_to_log(log_name, title)
     start_time = time.time()
-    sudoku = algorithm.return_problem_solution()
+    algorithm.return_problem_solution()
     end_time = time.time()
     duration_string = 'Duration: ' + str(end_time - start_time) + 's'
     log.append_to_log(log_name, duration_string)
     log.append_to_log(log_name, "Seed: " + str(seed))
     log.append_date(log_name)
-    sudoku.log_board(log_name)
+    log.append_to_log(log_name, algorithm.board.board_to_string())
     if printing:
+        pdf_printer = module_pdf_service.PdfPrinter(algorithm.board)
         pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
-    return sudoku
+    return algorithm.board
 
 
 def get_file_name(sudoku: Board, title: str, algorithm_name: str):
@@ -83,14 +83,14 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed:
     if log_name is None:
         log_name = get_log_file_name(algorithm_class.__name__)
     algorithm = algorithm_class(sudoku, seed, log_name)
-    pdf_printer = module_pdf_service.PdfPrinter(sudoku)
     title = 'Sudoku-Problem'
     log.append_to_log(log_name, title)
     algorithm.return_problem(difficulty)
-    log.append_to_log(log_name, sudoku.board_to_string())
+    log.append_to_log(log_name, algorithm.board.board_to_string())
     if printing:
+        pdf_printer = module_pdf_service.PdfPrinter(algorithm.board)
         pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
-    return sudoku
+    return algorithm.board
 
 
 def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, printing: bool,

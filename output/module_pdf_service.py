@@ -42,7 +42,7 @@ class PdfPrinter:
         row_counter = 1
         last_row = 1
         for boardRow in self.board.board:
-            for field in boardRow.boardRow:
+            for field_row_pos in range(0, self.board.length):
                 if row_counter % self.board.length == 0 \
                         and last_row * self.board.length != self.board.get_board_length():
                     row_counter = 1
@@ -53,7 +53,7 @@ class PdfPrinter:
                     column = soup.new_tag('tr')
                 for i in range(0, self.board.length):
                     column_counter = 1
-                    for val in field.field[i].fieldRow:
+                    for val in boardRow.boardRow[i].field[field_row_pos].fieldRow:
                         if column_counter % self.board.length == 0 and (
                                 i + 1) * self.board.length != self.board.get_board_length():
                             column_counter = 1
@@ -65,7 +65,7 @@ class PdfPrinter:
                                                 style="text-align: center; line-height: "
                                                       "30px; "
                                                       "height: 30px; width: 20px")
-                        if val != -1:
+                        if val != -1 and val is not None:
                             elem_div.insert(1, str(val))
                         elem.append(elem_div)
                         column.append(elem)
