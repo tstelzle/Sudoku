@@ -1,4 +1,5 @@
 import os
+import time
 
 LOGGING_DIRECTORY = 'logging/'
 
@@ -64,5 +65,19 @@ def append_to_log(file_name: str, text: str):
         create_log_file(file_name)
     log = open(get_complete_file_name(file_name), 'a')
     log.write(text)
+    log.write("\n")
+    log.close()
+
+
+def append_date(file_name: str):
+    """
+    param file_name: file name of the log file
+    Appends the current timestamp in human readable format to the log file.
+    """
+    if not log_file_exists(file_name):
+        create_log_file(file_name)
+    log = open(get_complete_file_name(file_name), 'a')
+    log.write("Time: ")
+    log.write(time.ctime(time.time()))
     log.write("\n")
     log.close()

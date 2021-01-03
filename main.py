@@ -46,6 +46,8 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     end_time = time.time()
     duration_string = 'Duration: ' + str(end_time - start_time) + 's'
     log.append_to_log(log_name, duration_string)
+    log.append_to_log(log_name, "Seed: " + str(seed))
+    log.append_date(log_name)
     sudoku.log_board(log_name)
     if printing:
         pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))

@@ -28,7 +28,7 @@ The difficulty parameter in the 'returnProblem()' function is a constant, which 
 
 The PdfService will print, if called, a pdf with the given board. The method to use is 'printSudoku()', with the only parameter being the title and name of the pdf. These will be put in the 'generated' directory.
 
-The command line will also print the board if specified. And for now also prints some information about the sudoku board.
+Exact information about the runtime will be saved to the log in the 'logging' directory.
 
 ## Running
 
