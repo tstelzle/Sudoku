@@ -144,13 +144,16 @@ def main():
     log.initialize_logger()
     module_pdf_service.initialize_printer()
 
-    recursive_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku, RecursiveBacktracking, seed))
+    recursive_thread = threading.Thread(target=run_solution_and_problem,
+                                        args=(sudoku, RecursiveBacktracking, seed, print_sudoku))
     recursive_thread.start()
 
-    iterative_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_2, BruteForceBacktracking, seed))
+    iterative_thread = threading.Thread(target=run_solution_and_problem,
+                                        args=(sudoku_2, BruteForceBacktracking, seed, print_sudoku))
     iterative_thread.start()
 
-    dynamic_thread = threading.Thread(target=run_solution_and_problem, args=(sudoku_3, DynamicBacktracking, seed))
+    dynamic_thread = threading.Thread(target=run_solution_and_problem,
+                                      args=(sudoku_3, DynamicBacktracking, seed, print_sudoku))
     dynamic_thread.start()
 
     recursive_thread.join()
