@@ -41,7 +41,10 @@ Therefore you have to follow theses steps:
 
 With the parameter 'SIZE' you can specify the size of the board. For example you can switch the default board size from three to two with: ```make run SIZE=2```
 
+With setting the parameter 'PRINT' to "True" the programm will print the problem and the solution as pdf.
+
 ### Local
 Without docker you need to install python3 on your machine and add the modules specified in the 'requirements.txt'.
 Then you can start the application with 'python main.py'.
-You are not going to be able to print an pdf as this uses the 'wkhtmltopdf' application. Therefore you would have to adjust the 'main.py' to not print the pdf or you install the 'wkhtmltopdf' on your system locally. (https://wkhtmltopdf.org/)
+
+If you want the print the solution and the problem as pdf you will have to install "wkhtmltopdf" and set the option '-p' when running "main.py".

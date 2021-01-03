@@ -25,11 +25,12 @@ def get_log_file_name(class_name: str):
     return class_name + '_' + get_timestamp()
 
 
-def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, log_name=None):
+def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, printing: bool, log_name=None):
     """
     Runs the given algorithm and returns the sudoku solution.
     :param log_name: log file name
     :param seed: seed value
+    :param printing: Bool value if the pages should be printed
     :param sudoku: the sudoku board
     :param algorithm_class: the class of the algorithm to use
     :return: the sudoku board
@@ -46,7 +47,8 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     duration_string = 'Duration: ' + str(end_time - start_time) + 's'
     log.append_to_log(log_name, duration_string)
     sudoku.log_board(log_name)
-    pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
+    if printing:
+        pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return sudoku
 
 
@@ -64,12 +66,14 @@ def get_file_name(sudoku: Board, title: str, algorithm_name: str):
 
 
 def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, difficulty: difficulties,
+                printing: bool,
                 log_name=None):
     """
     Runs the given algorithm and returns the sudoku problem.
     :param log_name: log file name
     :param seed: seed value
     :param sudoku: the sudoku board
+    :param printing: Bool value if the pages should be printed
     :param algorithm_class: the class of the algorithm to use
     :param difficulty: the difficulty of the problem specified by the enum
     :return: the sudoku board
@@ -82,23 +86,25 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed:
     log.append_to_log(log_name, title)
     algorithm.return_problem(difficulty)
     log.append_to_log(log_name, sudoku.board_to_string())
-    pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
+    if printing:
+        pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return sudoku
 
 
-def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int,
+def run_solution_and_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed: int, printing: bool,
                              difficulty=difficulties.HARD):
     """
     Runs the two methods 'runSolution' and 'runProblem' to calculate the sudoku solution and problem.
     :param seed: seed value
     :param sudoku: the sudoku board
+    :param printing: Bool value if the pages should be printed
     :param algorithm_class: the class of the algorithm to use
     :param difficulty: the difficulty of the problem specified by the enum
     :return:
     """
     log_name = get_log_file_name(algorithm_class.__name__)
-    sudoku_sol = run_solution(sudoku, algorithm_class, seed, log_name)
-    sudoku_prob = run_problem(sudoku_sol, algorithm_class, seed, difficulty, log_name)
+    sudoku_sol = run_solution(sudoku, algorithm_class, seed, printing, log_name)
+    sudoku_prob = run_problem(sudoku_sol, algorithm_class, seed, difficulty, printing, log_name)
     return [sudoku_sol, sudoku_prob]
 
 
@@ -115,18 +121,17 @@ def print_board_information(sudoku: Board):
     print("")
 
 
-def read_board_parameter():
-    """
-    Reads the input parameters. And returns the size of the board.
-    :return: int
-    """
-    if len(sys.argv) > 1:
-        return int(sys.argv[1])
-    return -1
-
-
 def main():
-    board_size = read_board_parameter() if read_board_parameter() > 0 else 3
+    print_sudoku = False
+    board_size = 3
+
+    if len(sys.argv) > 1:
+        for argument in sys.argv:
+            splitted_argument = argument[:2]
+            if splitted_argument == "-p":
+                print_sudoku = True
+            elif splitted_argument == "-s":
+                board_size = int(argument.split("=")[1])
 
     sudoku = Board(board_size)
     sudoku_2 = copy.deepcopy(sudoku)

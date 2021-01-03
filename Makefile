@@ -6,7 +6,9 @@ CONTAINER-NAME := sudoku
 MOUNT-DIR := $(PWD)
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 SIZE := 3
-RUN := docker exec -it -w /usr/src $(CONTAINER-NAME) python main.py $(SIZE)
+PRINT := False
+RUN := docker exec -it -w /usr/src $(CONTAINER-NAME) python main.py -s=$(SIZE)
+RUN_PRINT := docker exec -it -w /usr/src $(CONTAINER-NAME) python main.py -s=$(SIZE) -p
 IGNORE-OUTPUT := > /dev/null 2>&1
 
 .PHONY: default build-image container run run-master
@@ -24,7 +26,11 @@ container:
 	docker run -d -t --rm -v $(MOUNT-DIR):/usr/src --name $(CONTAINER-NAME) $(IMAGE-NAME)
 
 run:
+ifeq "$(PRINT)" "False"
 	$(RUN)
+else
+	$(RUN_PRINT)
+endif
 
 run-master:
 	git stash --include-untracked $(IGNORE-OUTPUT)
