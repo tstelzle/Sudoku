@@ -68,14 +68,6 @@ class BruteForceBacktracking(ProblemFinder):
                             x -= 1
                         break
 
-    def return_problem(self, difficulty: difficulties):
-        if self.board.get_value(0, 0) is None:
-            self.return_problem_solution()
-        for val in range(0, math.floor(self.board.get_max_number_of_entries() * difficulty)):
-            x = random.randint(0, self.board.get_board_length() - 1)
-            y = random.randint(0, self.board.get_board_length() - 1)
-            self.board.set_value(x, y, -1)
-
     def initialize_set_values(self):
         """
         Initializes the setValues dictionary, which stores which values can be used in the sudoku at this position.
