@@ -15,6 +15,22 @@ class Computerphile(ProblemFinder):
         self.board = board
 
     def return_problem_solution(self):
+        self.solve()
+        for y in range(self.board.get_board_length()):
+            for x in range(self.board.get_board_length()):
+                if self.board.get_value(x, y) == -1 or self.board.get_value(x, y) is None:
+                    return False
+        return True
+
+    def solve(self):
+        """
+        Calculates a solution for the sudoku board.
+        It iteratores over the free fields and chooses a valid value.
+        With recursion it does this for the next free field.
+        When there is no possible option for a field solve() returns False and resets the previous entry.
+        Otherwise it returns True and goes on with the next free field.
+        :return: Bool algorithm finished / value was good or not
+        """
         for y in range(self.board.get_board_length()):
             for x in range(self.board.get_board_length()):
                 if self.board.get_value(x, y) == -1 or self.board.get_value(x, y) is None:
@@ -24,12 +40,12 @@ class Computerphile(ProblemFinder):
                         random_value_list.remove(n)
                         if self.possible(y, x, n):
                             self.board.set_value(x, y, n)
-                            if self.return_problem_solution():
+                            if not self.solve():
                                 self.board.set_value(x, y, -1)
                             else:
-                                return False
-                    return True
-        return False
+                                return True
+                    return False
+        return True
 
     def possible(self, y: int, x: int, n: int):
         """

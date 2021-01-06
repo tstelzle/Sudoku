@@ -30,7 +30,7 @@ class ProblemFinder(ABC):
     def return_problem_solution(self):
         """
         Calculates the solution the problem given in returnProblem.
-        :return: None
+        :return: Bool if a solution for the board was found
         """
         pass
 
