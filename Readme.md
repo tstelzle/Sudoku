@@ -7,13 +7,14 @@ Afterwards the algorithms should be adjusted to solve the generated problem inde
 
 ### Algorithms
 1. Brute Force & Backtracking (Iterative & Recursive)
-2. ILP / SMT
+2. ILP / SMT (ToDo)
 3. Brute Force With Dynamic Backtracking
-4. Exact Cover (Mathematical Solution)
-5. Random Insert Of Numbers -> Test For Working Solution
+4. Exact Cover (Mathematical Solution) (ToDO)
+5. Random Insert Of Numbers -> Test For Working Solution (ToDo)
+6. Youtube Channel Computerphile Implementation
 
 ## Explanation Of The Implementation
-The sudoku board is build with the classes inside the 'Board' directory.
+The sudoku board is build with the classes inside the 'module_board' directory.
 The picture clarifies the board structure.
 The size of the sudoku is always a square. In the picture the size of the sudoku board is three. The following explanation will always use the picture size. The size can be adjusted to a positive integer number and is therefore scalable.
 
