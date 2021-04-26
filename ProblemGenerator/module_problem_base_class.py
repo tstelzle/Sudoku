@@ -2,7 +2,6 @@ import math
 import random
 from abc import ABC, abstractmethod
 
-import Utils.module_logger as log
 import ProblemGenerator.difficulties as difficulties
 from Board.module_board import Board
 
@@ -15,19 +14,23 @@ class ProblemFinder(ABC):
         self.log_name = log_name
         random.seed(seed)
 
-    @abstractmethod
     def return_problem(self, difficulty: difficulties):
         """
-        Returns the board with the starting numbers for the sudoku.
-        :return: Board
+        Calcualtes the board with the starting numbers for the sudoku.
+        :return: None
         """
-        pass
+        if self.board.get_value(0, 0) is None:
+            self.return_problem_solution()
+        for val in range(0, math.floor(self.board.get_max_number_of_entries() * difficulty)):
+            x = random.randint(0, self.board.get_board_length() - 1)
+            y = random.randint(0, self.board.get_board_length() - 1)
+            self.board.set_value(x, y, -1)
 
     @abstractmethod
     def return_problem_solution(self):
         """
-        Returns the solution the problem given in returnProblem.
-        :return: Board
+        Calculates the solution the problem given in returnProblem.
+        :return: Bool if a solution for the board was found
         """
         pass
 
