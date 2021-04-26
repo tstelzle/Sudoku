@@ -1,8 +1,8 @@
 # seed the pseudorandom number generator
 from random import seed
 
-from Board.module_board import Board
-from module_problem_generator.module_problem_base_class import ProblemFinder
+from module_board import Board
+from .module_problem_base_class import ProblemFinder
 
 
 class RandomProblem(ProblemFinder):

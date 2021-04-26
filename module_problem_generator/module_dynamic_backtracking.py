@@ -1,10 +1,8 @@
-import math
 import random
 import copy
 
 from module_board import Board
-import module_problem_generator.difficulties as difficulties
-from module_problem_generator.module_problem_base_class import ProblemFinder
+from .module_problem_base_class import ProblemFinder
 
 
 def get_identifier(x: int, y: int):
@@ -72,14 +70,6 @@ class DynamicBacktracking(ProblemFinder):
                 del self.values_states[-1]
                 del self.repeat[-1]
             id_min = self.find_minimum()
-
-    def return_problem(self, difficulty: difficulties):
-        if self.board.get_value(0, 0) is None:
-            self.return_problem_solution()
-        for val in range(0, math.floor(self.board.get_max_number_of_entries() * difficulty)):
-            x = random.randint(0, self.board.get_board_length() - 1)
-            y = random.randint(0, self.board.get_board_length() - 1)
-            self.board.set_value(x, y, -1)
 
     def initialize_set_values(self):
         """

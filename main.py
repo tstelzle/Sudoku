@@ -134,6 +134,7 @@ def main():
     sudoku = Board(board_size)
     sudoku_2 = copy.deepcopy(sudoku)
     sudoku_3 = copy.deepcopy(sudoku)
+    sudoku_4 = copy.deepcopy(sudoku)
 
     seed = get_seed()
 
@@ -152,9 +153,14 @@ def main():
                                       args=(sudoku_3, DynamicBacktracking, seed, print_sudoku))
     dynamic_thread.start()
 
+    computerphile_thread = threading.Thread(target=run_solution_and_problem,
+                                            args=(sudoku_4, Computerphile, seed, print_sudoku))
+    computerphile_thread.start()
+
     recursive_thread.join()
     iterative_thread.join()
     dynamic_thread.join()
+    computerphile_thread.join()
 
 
 if __name__ == "__main__":
