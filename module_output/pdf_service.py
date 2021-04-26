@@ -3,7 +3,7 @@ import os
 import bs4
 import pdfkit
 
-from Board.module_board import Board
+from module_board import Board
 
 
 def initialize_printer():
@@ -29,7 +29,7 @@ class PdfPrinter:
         :param output_name: filename of the pdf
         :return: filename of the generated template
         """
-        with open('output/template.html') as template:
+        with open('module_output/template.html') as template:
             html = template.read()
             soup = bs4.BeautifulSoup(html, 'html.parser')
 
@@ -94,6 +94,6 @@ class PdfPrinter:
             'title': title,
             'page-size': 'A4'
         }
-        pdfkit.from_file(file_name, output, css='output/gutenberg.css', options=options)
+        pdfkit.from_file(file_name, output, css='module_output/gutenberg.css', options=options)
         os.chmod(output, 0o777)
         os.remove(file_name)

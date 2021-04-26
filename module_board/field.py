@@ -1,4 +1,4 @@
-from Board.module_field_row import FieldRow
+from .field_row import FieldRow
 
 
 class Field:

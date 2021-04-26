@@ -2,9 +2,8 @@ import math
 import random
 from abc import ABC, abstractmethod
 
-import Utils.module_logger as log
-import ProblemGenerator.difficulties as difficulties
-from Board.module_board import Board
+import module_problem_generator.difficulties as difficulties
+from module_board import Board
 
 
 class ProblemFinder(ABC):

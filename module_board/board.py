@@ -1,7 +1,7 @@
 import math
 
-import Utils.module_logger as log
-from Board.module_board_row import BoardRow
+import module_logger as log
+from .board_row import BoardRow
 
 
 class Board:
