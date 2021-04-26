@@ -3,15 +3,10 @@ import sys
 import threading
 import time
 
-import ProblemGenerator.difficulties as difficulties
-import Utils.module_logger as log
-from Board.module_board import Board
-from ProblemGenerator import module_problem_base_class
-from ProblemGenerator.module_brute_force_backtracking import BruteForceBacktracking
-from ProblemGenerator.module_recursive_backtracking import RecursiveBacktracking
-from ProblemGenerator.module_dynamic_backtracking import DynamicBacktracking
-from ProblemGenerator.module_computerphile import Computerphile
-from output import module_pdf_service
+from module_problem_generator import *
+from module_logger import logger as log
+from module_board import Board
+from module_output import pdf_service
 
 
 def get_seed():
@@ -50,7 +45,7 @@ def run_solution(sudoku: Board, algorithm_class: module_problem_base_class, seed
     log.append_date(log_name)
     log.append_to_log(log_name, algorithm.board.board_to_string())
     if printing:
-        pdf_printer = module_pdf_service.PdfPrinter(algorithm.board)
+        pdf_printer = pdf_service.PdfPrinter(algorithm.board)
         pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return algorithm.board
 
@@ -89,7 +84,7 @@ def run_problem(sudoku: Board, algorithm_class: module_problem_base_class, seed:
     algorithm.return_problem(difficulty)
     log.append_to_log(log_name, algorithm.board.board_to_string())
     if printing:
-        pdf_printer = module_pdf_service.PdfPrinter(algorithm.board)
+        pdf_printer = pdf_service.PdfPrinter(algorithm.board)
         pdf_printer.print_sudoku(title, get_file_name(sudoku, title, algorithm_class.__name__))
     return algorithm.board
 
@@ -144,7 +139,7 @@ def main():
     seed = get_seed()
 
     log.initialize_logger()
-    module_pdf_service.initialize_printer()
+    pdf_service.initialize_printer()
 
     recursive_thread = threading.Thread(target=run_solution_and_problem,
                                         args=(sudoku, RecursiveBacktracking, seed, print_sudoku))

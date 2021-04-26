@@ -1,10 +1,8 @@
-import math
 import random
 import copy
 
-import Board.module_board
-import ProblemGenerator.difficulties as difficulties
-from ProblemGenerator.module_problem_base_class import ProblemFinder
+from module_board import Board
+from .module_problem_base_class import ProblemFinder
 
 
 def get_identifier(x: int, y: int):

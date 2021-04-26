@@ -7,13 +7,14 @@ Afterwards the algorithms should be adjusted to solve the generated problem inde
 
 ### Algorithms
 1. Brute Force & Backtracking (Iterative & Recursive)
-2. ILP / SMT
+2. ILP / SMT (ToDo)
 3. Brute Force With Dynamic Backtracking
-4. Exact Cover (Mathematical Solution)
-5. Random Insert Of Numbers -> Test For Working Solution
+4. Exact Cover (Mathematical Solution) (ToDo)
+5. Random Insert Of Numbers -> Test For Working Solution (ToDo)
+6. Youtube Channel Computerphile Implementation
 
 ## Explanation Of The Implementation
-The sudoku board is build with the classes inside the 'Board' directory.
+The sudoku board is build with the classes inside the 'module_board' directory.
 The picture clarifies the board structure.
 The size of the sudoku is always a square. In the picture the size of the sudoku board is three. The following explanation will always use the picture size. The size can be adjusted to a positive integer number and is therefore scalable.
 
@@ -23,7 +24,7 @@ An Empty value is either represented by 'None' or '-1'.
 
 ![BoardStructure](BoardStructure.png)
 
-All algorithms are in the 'ProblemGenerator' directory. Each of them extends the abstract class 'ProblemBaseClass'. The 'ProblemBaseClass' defines two methods. The method 'returnProblem()' should set the board with a sudoku problem. The 'returnProblemSolution()' should return a solution.
+All algorithms are in the 'module_problem_generator' directory. Each of them extends the abstract class 'ProblemBaseClass'. The 'ProblemBaseClass' defines two methods. The method 'returnProblem()' should set the board with a sudoku problem. The 'returnProblemSolution()' should return a solution.
 The difficulty parameter in the 'returnProblem()' function is a constant, which specifies how many values on the board are not set.
 
 The PdfService will print, if called, a pdf with the given board. The method to use is 'printSudoku()', with the only parameter being the title and name of the pdf. These will be put in the 'generated' directory.

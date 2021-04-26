@@ -1,4 +1,4 @@
-from Board.module_field import Field
+from .field import Field
 
 
 class BoardRow:

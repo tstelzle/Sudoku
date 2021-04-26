@@ -1,7 +1,7 @@
 import random
 
-import Board.module_board
-from ProblemGenerator.module_problem_base_class import ProblemFinder
+from module_board import Board
+from .module_problem_base_class import ProblemFinder
 
 
 class Computerphile(ProblemFinder):
