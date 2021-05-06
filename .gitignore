@@ -2,4 +2,6 @@
 /**/*.pdf
 __pycache__/
 generated/*
+/venv/
+!/papers/*.pdf
 /**/*.txt
